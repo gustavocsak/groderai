@@ -1,0 +1,48 @@
+Assignment #3 Instructions:
+
+We will be working with characters and character arrays in Java,
+
+You are to develop a java file, implement and document the following methods:
+
+boolean containsCharacter(char[] arr, char c)
+- returns true if arr contains at least one occurrence of c
+- returns false otherwise
+
+boolean containsDuplicateSorted(char[] arr)
+- given a sorted char array, returns true if arr contains a duplicate character
+- returns false if all characters are unique
+- uses the fact that the array is sorted
+
+boolean containsDuplicate(char[] arr)
+- given a char array, returns true if arr contains a duplicate character
+- returns false if all characters are unique
+
+void toLowercaseArray(char[] arr)
+- converts all characters in arr to lowercase
+- ignores non-letter characters
+
+boolean isLetter(char c)
+- returns true if c is a letter
+- returns false otherwise
+
+boolean isDigit(char c)
+- returns true if c is a digit
+- returns false otherwise
+
+boolean isEqual(char[] left, char[] right)
+- returns true if the two arrays contains the same exact letters with the same frequencies
+- the order and the case of the characters does not matter
+- ignores non-letter characters
+- for example:
+{ a, d, e, z } and { d, a, z, e } should return true, letters are same
+{ a, d, e, z } and { d, a, z, e, e } should return false, since frequencies are different (extra e)
+{ L, e, G, o } and { l, e, g, o } should return true, letters are same (ignores case)
+{ e } and { e, e, e } should return false, frequencies are different
+{ h, e, l, l, o, 1, 2 } and { h, e, l, l, o } should return true, letters are same (ignores non-letter characters)
+
+
+
+Notes:
+- Do not use the Character class
+- Do not use "magic numbers" in your solutions (for example using: - 65 instead of - 'A')
+- Use javadoc to document your methods

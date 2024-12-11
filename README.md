@@ -15,9 +15,9 @@ The input data contains
 - A text file containing the assignment instructions/requirements
 
  ## 2. Output Data
- 
+
  The output file is a markdown file containing the generated summary for the code file provided according to the assignment instructions.
- 
+
  The summary may contain
  - Information on code readability, documentation, indentation
  - Potential mistakes and inefficiencies
@@ -28,3 +28,4 @@ The input data contains
    - Use of not allowed libraries and/or functions
  - Correct concepts applied and requirements fulfilled
    - Functions/methods required are present and implemented correctly
+   - Proper variable, constant and class naming

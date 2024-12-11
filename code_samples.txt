@@ -1,0 +1,19 @@
+Sample.java:
+- Documentation using javadoc
+- Linear solution for containsDuplicateSorted
+- Does not use Character class
+- Correct programming style (variable, class, constant naming, indentation)
+- Does not use magic numbers for lowercase conversion
+- Linear solution for isEqual
+
+
+sample2.java:
+- Missing class documentation and some methods documentation
+- Incorrect format for method documentation, does not use javadoc
+- Does use the Character class (not allowed)
+- Variable/constant/class naming does not follow programming style
+    - Incorrect constant naming (lowercase) (letters instead of LETTERS)
+    - Incorrect variable naming (first letter uppercase) (LeftFrequency instead of leftFrequency)
+    - Incorrect class naming (first letter lowercase) (sample2 instead of Sample2)
+- Uses "magic numbers" to convert to lowercase (Using 32 instead of 'a' - 'A')
+- Quadratic solution for containsDuplicateSorted (Solution should be linear)
