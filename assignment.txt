@@ -40,8 +40,6 @@ boolean isEqual(char[] left, char[] right)
 { e } and { e, e, e } should return false, frequencies are different
 { h, e, l, l, o, 1, 2 } and { h, e, l, l, o } should return true, letters are same (ignores non-letter characters)
 
-
-
 Notes:
 - Do not use the Character class
 - Do not use "magic numbers" in your solutions (for example using: - 65 instead of - 'A')

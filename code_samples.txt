@@ -11,6 +11,7 @@ sample2.java:
 - Missing class documentation and some methods documentation
 - Incorrect format for method documentation, does not use javadoc
 - Does use the Character class (not allowed)
+- Missing isDigit implementation
 - Variable/constant/class naming does not follow programming style
     - Incorrect constant naming (lowercase) (letters instead of LETTERS)
     - Incorrect variable naming (first letter uppercase) (LeftFrequency instead of leftFrequency)
