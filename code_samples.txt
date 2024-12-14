@@ -18,3 +18,4 @@ sample2.java:
     - Incorrect class naming (first letter lowercase) (sample2 instead of Sample2)
 - Uses "magic numbers" to convert to lowercase (Using 32 instead of 'a' - 'A')
 - Quadratic solution for containsDuplicateSorted (Solution should be linear)
+- Syntax error on isLetter, missing `c` parameter in expression

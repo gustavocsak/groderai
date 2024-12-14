@@ -2,7 +2,7 @@ public class sample2 {
 
   /**
    * Returns true if the array contains the given character
-   * 
+   *
    * @param arr the array to be searched
    * @param c the character to search for
    * @return {@code true} if the array contains the character {@code c}, {@code false} otherwise
@@ -19,7 +19,7 @@ public class sample2 {
   /**
    * Returns true if the array contains a duplicate character
    * precondition: arr is sorted
-   * 
+   *
    * @param arr the array to be searched
    * @return {@code true} if the array contains a duplicate character, {@code false} otherwise
    */
@@ -49,7 +49,7 @@ public class sample2 {
   /**
    * Converts all characters in the array to lowercase.
    * Non-letter characters are ignored.
-   * 
+   *
    * @param arr array of characters to be converted
    */
   public void toLowercaseArray(char[] arr) {
@@ -61,16 +61,16 @@ public class sample2 {
   }
 
   public boolean isLetter(char c) {
-    return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+    return ((c >= 'A' &&  <= 'Z') || (c >= 'a' && c <= 'z'));
   }
 
   /**
-   * Compares two character arrays to determine if they contain the exact same letters 
+   * Compares two character arrays to determine if they contain the exact same letters
    * in any order and any case, with the same frequency.
-   * 
+   *
    * @param left the first character array to compare
    * @param right the second character array to compare
-   * @return {@code true} if the arrays contain the same letters with the same frequency, 
+   * @return {@code true} if the arrays contain the same letters with the same frequency,
    *         {@code false} otherwise
    */
   public boolean isEqual(char[] left, char[] right) {
@@ -105,11 +105,11 @@ public class sample2 {
   }
 
   /**
-   * Converts the given character to lowercase if it is an uppercase letter. 
+   * Converts the given character to lowercase if it is an uppercase letter.
    * If the character is already in lowercase or is not a letter, it is returned unchanged.
    *
    * @param c the character to be converted to lowercase
-   * @return the lowercase equivalent of {@code c} if it is an uppercase letter; 
+   * @return the lowercase equivalent of {@code c} if it is an uppercase letter;
    *         otherwise, returns the original character
    */
   public char toLowercase(char c) {
