@@ -3,11 +3,14 @@ Analyze and summarize code to augment grading
 
 ## Setup
 
-Blank for now
+```
+python main.py
+```
 
 ## Overview
 
-GroderAI is a tool designed to analyze and summarize code submissions using language models and linters. The project evaluates the submitted code for errors, inefficiencies, and adherence to assignment requirements. It generates a summary, providing insights into coding style, correctness, and compliance with given instructions, helping educators optimize the grading process.
+GroderAI is a tool designed to analyze and summarize code submissions using language models and linters. The project evaluates the submitted code for errors, inefficiencies, and compliance to assignment requirements.
+It generates a summary, providing insights into coding style, correctness according to the given instructions, helping educators optimize the grading process.
 
 ## 1. Input Data
 The input data contains
@@ -16,9 +19,9 @@ The input data contains
 
  ## 2. Output Data
 
- The output file is a markdown file containing the generated summary for the code file provided according to the assignment instructions.
+ The output is an array of objects, containing the generated summary for the code file provided according to the assignment instructions.
 
- The summary may contain
+ Each object contain
  - Information on code readability, documentation, indentation
  - Potential mistakes and inefficiencies
    - Syntax errors
