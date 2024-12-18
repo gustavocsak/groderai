@@ -1,4 +1,3 @@
-import { Input } from "./ui/input";
 import { UseFormRegisterReturn } from "react-hook-form";
 import {
   FormControl,
@@ -7,6 +6,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { InputFile } from "./ui/input-file";
+import { Upload } from "lucide-react";
 
 interface FileUploadProps {
   fileName: string;
@@ -21,10 +22,11 @@ export default function FileUpload({
 }: FileUploadProps) {
   return (
     <FormItem>
-      <FormLabel>{fileName}</FormLabel>
+      <FormLabel className="text-base">{fileName}</FormLabel>
       <FormControl>
-        <Input id={fileName} type="file" {...ref} />
+        <InputFile id={fileName} type="file" {...ref} />
       </FormControl>
+      <Upload className="absolute right-2 top-2 h-5 w-5 text-gray-400" />
       <FormDescription>{description}</FormDescription>
       <FormMessage />
     </FormItem>

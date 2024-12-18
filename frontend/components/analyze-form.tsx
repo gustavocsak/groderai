@@ -7,6 +7,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import FileUpload from "./file-upload";
+import axios from "axios";
 
 const formSchema = z.object({
   // thanks to https://medium.com/@damien_16960/input-file-x-shadcn-x-zod-88f0472c2b81
@@ -22,10 +23,23 @@ export default function AnalyzeForm() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    try {
+      const formData = new FormData();
+      formData.append("instructions", values.instructions[0]);
+      formData.append("code", values.code[0]);
+
+      const response = await axios.post("/api/analyze", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   }
 
   const instructionsRef = form.register("instructions");
