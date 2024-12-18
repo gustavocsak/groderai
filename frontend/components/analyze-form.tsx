@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import FileUpload from "./file-upload";
 import axios from "axios";
+import { useSetAtom } from "jotai";
+import { reportData, reportLoading } from "@/store/state";
 
 const formSchema = z.object({
   // thanks to https://medium.com/@damien_16960/input-file-x-shadcn-x-zod-88f0472c2b81
@@ -17,6 +19,8 @@ const formSchema = z.object({
 });
 
 export default function AnalyzeForm() {
+  const setLoading = useSetAtom(reportLoading);
+  const setData = useSetAtom(reportData);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -27,18 +31,24 @@ export default function AnalyzeForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append("instructions", values.instructions[0]);
       formData.append("code", values.code[0]);
+
+      console.log(formData);
 
       const response = await axios.post("/api/analyze", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response);
+      setData(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false);
     }
   }
 
