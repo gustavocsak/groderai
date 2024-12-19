@@ -19,9 +19,9 @@ The input data contains
 
  ## 2. Output Data
 
- The output is an array of objects, containing the generated summary for the code file provided according to the assignment instructions.
+ The output is an Assignment object, containing the generated summary for the code file provided according to the assignment instructions.
 
- Each object contain
+ The assignment object contains
  - Information on code readability, documentation, indentation
  - Potential mistakes and inefficiencies
    - Syntax errors
