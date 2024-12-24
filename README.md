@@ -3,9 +3,28 @@ Analyze and summarize code to augment grading
 
 ## Setup
 
+Install python requirements
 ```
-python main.py
+pip install -r requirements.txt
 ```
+
+and run the api (from within the api/ folder)
+```
+flask run
+```
+
+go into the frontend/ folder and install the packages
+```
+npm i
+```
+
+run the frontend (from within the api/ folder)
+```
+npm run dev
+```
+
+
+Make sure to set your GEMINI_KEY in a .env file
 
 ## Overview
 
