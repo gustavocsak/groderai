@@ -18,7 +18,7 @@ export default function Header() {
             GroderAI
           </Link>
           <div className="hidden md:flex space-x-8">
-            <Link
+            {/* <Link
               href="#features"
               className="text-sm text-gray-300 hover:text-white transition-colors"
             >
@@ -35,7 +35,7 @@ export default function Header() {
               className="text-sm text-gray-300 hover:text-white transition-colors"
             >
               Pricing
-            </Link>
+            </Link> */}
           </div>
           <div className="flex items-center space-x-4">
             <Link

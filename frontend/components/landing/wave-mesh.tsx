@@ -31,7 +31,7 @@ export default function WaveMesh() {
       const cellHeight = canvas.height / rows;
 
       ctx.beginPath();
-      ctx.strokeStyle = "rgba(22, 163, 74, 0.9)"; // pink-600 with opacity
+      ctx.strokeStyle = "rgba(225, 29, 72, 0.9)"; // pink-600 with opacity
       ctx.lineWidth = 1.5;
 
       for (let i = 0; i < rows; i++) {

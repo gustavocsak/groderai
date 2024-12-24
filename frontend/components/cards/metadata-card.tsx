@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Metadata } from "@/lib/types";
+import { Badge } from "../ui/badge";
 
 interface MetadataProps {
   metadata: Metadata;
@@ -16,10 +17,15 @@ export default function MetadataCard({ metadata }: MetadataProps) {
   return (
     <Card className="h-full overflow-auto">
       <CardHeader>
-        <CardTitle className="text-xl">Metadata</CardTitle>
-        <CardDescription>
-          Here is a quick rundown about your assignment
-        </CardDescription>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="text-2xl font-bold">Metadata</CardTitle>
+            <CardDescription className="text-muted-foreground">
+              Here is a quick rundown about your assignment
+            </CardDescription>
+          </div>
+          <Badge className="text-sm">{metadata.language}</Badge>
+        </div>
       </CardHeader>
       <CardContent className="space-y-8">
         <div className="space-y-1">

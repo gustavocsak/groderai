@@ -23,7 +23,7 @@ export default function AnalysisCard({ analysis }: AnalysisCardProps) {
   return (
     <Card className="h-full overflow-auto">
       <CardHeader>
-        <CardTitle className="text-xl">Code Analysis</CardTitle>
+        <CardTitle className="text-2xl">Code Analysis</CardTitle>
         <CardDescription>
           Here is an analysis about the code submitted
         </CardDescription>

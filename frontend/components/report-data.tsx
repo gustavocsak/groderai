@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MethodCard from "./cards/method-card";
 import AnalysisCard from "./cards/analysis-card";
+import AnalysisCardTest from "./cards/analysis-card-test";
 import MetadataCard from "./cards/metadata-card";
 import { ApiResponse } from "@/lib/types";
 
@@ -20,7 +21,7 @@ export function ReportData({ data }: ReportDataProps) {
         <MetadataCard metadata={data.metadata} />
       </TabsContent>
       <TabsContent value="code-analysis" className="flex-1">
-        <AnalysisCard analysis={data.code_analysis} />
+        <AnalysisCardTest analysis={data.code_analysis} />
       </TabsContent>
       <TabsContent value="methods" className="flex-1">
         <MethodCard methods={data.methods} />

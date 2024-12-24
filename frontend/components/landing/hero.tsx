@@ -18,7 +18,7 @@ export default function Hero() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-700">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-rose-700">
                 GroderAI
               </span>
               <br />
@@ -32,9 +32,8 @@ export default function Hero() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-white text-lg md:text-xl max-w-2xl mx-auto mb-8"
           >
-            Our technology performs fast hypothesis UNDE-TDR and it has
-            guaranteed AI based test security. Proof of State, its consensus
-            algorithm enables unlimited speeds.
+            GroderAI analyzes and summarizes code to augment grading, saving
+            time and improving consistency for educators and coding instructors.
           </motion.p>
 
           <motion.div
@@ -44,7 +43,7 @@ export default function Hero() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Link href="/analyze">
-              <button className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-700 text-white rounded-full font-medium hover:opacity-90 transition-opacity">
+              <button className="px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-700 text-white rounded-full font-medium hover:opacity-90 transition-opacity">
                 Live Demo
               </button>
             </Link>

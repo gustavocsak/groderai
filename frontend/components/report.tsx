@@ -12,7 +12,7 @@ export default function Report() {
     return (
       <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
         <GridLoader
-          color="#171717"
+          color="#e11d48"
           size={20}
           aria-label="Loading Spinner"
           data-testid="loader"
@@ -29,7 +29,7 @@ export default function Report() {
   }
   return (
     <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
-      <h2 className="text-6xl font-bold">Welcome to GroderAI</h2>
+      <h2 className="text-6xl font-bold tracking-tight">Welcome to GroderAI</h2>
       <h3 className="text-3xl text-muted-foreground">
         Your code report will be shown here
       </h3>
