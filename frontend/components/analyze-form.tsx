@@ -33,15 +33,13 @@ export default function AnalyzeForm() {
       formData.append("instructions", values.instructions[0]);
       formData.append("code", values.code[0]);
 
-      console.log(formData);
-
       const response = await axios.post("/api/analyze", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+
       setData(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
