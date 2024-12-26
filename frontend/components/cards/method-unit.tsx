@@ -22,7 +22,7 @@ export default function MethodUnit({
     <div className="border rounded-lg p-4 space-y-4 hover:bg-accent/50 transition-colors">
       <div className="flex items-center justify-between">
         <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
-          {prototype}
+          {prototype != "N/A" ? prototype : expected_prototype}
         </code>
         <div className="flex gap-2">
           <Badge
