@@ -4,6 +4,8 @@ from pydantic import BaseModel
 from typing import List, Literal
 import google.generativeai as genai
 import json
+import subprocess
+
 
 load_dotenv()
 
@@ -42,25 +44,56 @@ model = genai.GenerativeModel(
   system_instruction="Act as a coding assistant tool, report any errors and findings according to the assignment instructions given"
 )
 
+def lint_code(code):
+  file_path = "temp.java"
+  with open(file_path, 'w') as f:
+    f.write(code)
+
+  command = [
+    'java', '-jar', 'checkstyle-10.21.1-all.jar',
+    '-c', '/google_checks.xml', file_path
+  ]
+  result = subprocess.run(command, capture_output=True, text=True)
+  os.remove(file_path)
+
+  if result.returncode == 0:
+    print("Linter passed with no issues.")
+    return result.stdout
+  else:
+    print("Linter found issues:")
+    return result.stderr
+
+  return result
 
 def analyze_code(instructions, code):
+
+  linter_results = lint_code(code)
+
   prompt = f"""
-    You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing and summarizing both the submitted code and the assignment instructions. Your goal is to provide a clear and concise report.
-    ### Task
-    - You will receive a text containing the assignment instructions.
-    - Along with this, you will analyze the code submitted by the student.
+    You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing
+    and summarizing both the submitted code and the assignment instructions.
+    Your goal is to provide a clear and concise report based on the <DATA> section.
 
-    ### Role
-    - Your responsibility is to carefully examine the assignment instructions and the student's code.
-    - Identify and highlight key details and important information.
-    - Present your findings in alignment with the provided response schema.
-    - You must fill all the fields in the report, if something is not applicable use "N/A"
+    <ROLE>
+    Carefully examine the assignment instructions and the student's code.
+    Identify and highlight key details and important information.
+    Present your findings in alignment with the provided response schema.
+    You must fill all the fields in the report, if something is not applicable use "N/A"
+    </ROLE>
 
-    Instructions:
-    {instructions}
+    <DATA>
+      <INSTRUCTIONS>
+      {instructions}
+      </INSTRUCTIONS>
 
-    Student code:
-    {code}
+      <CODE>
+      {code}
+      </CODE>
+
+      <LINTING_RESULTS>
+      {linter_results}
+      </LINTING_RESULTS>
+    </DATA>
   """
 
   result = model.generate_content(
@@ -72,3 +105,30 @@ def analyze_code(instructions, code):
 
   parsed_data = json.loads(result.text)
   return parsed_data
+
+
+
+# past prompt
+#  prompt = f"""
+#   You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing
+#   and summarizing both the submitted code and the assignment instructions.
+#   Your goal is to provide a clear and concise report based on the <DATA> section.
+#   ### Task
+#   - You will receive a text containing the assignment instructions.
+#   - Along with this, you will analyze the code submitted by the student.
+
+#   ### Role
+#   - Your responsibility is to carefully examine the assignment instructions and the student's code.
+#   - Identify and highlight key details and important information.
+#   - Present your findings in alignment with the provided response schema.
+#   - You must fill all the fields in the report, if something is not applicable use "N/A"
+
+#   Instructions:
+#   {instructions}
+
+#   Student code:
+#   {code}
+
+#   Linter Results
+#   {linter_results}
+# """
