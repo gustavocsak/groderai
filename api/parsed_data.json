@@ -1,0 +1,371 @@
+{
+    "metadata": {
+        "description": "Analysis of student code for a text file processing assignment.",
+        "language": "Java",
+        "requirements": [
+            "No Syntax Errors",
+            "No Runtime Errors",
+            "Program must contains at least 5 methods",
+            "The program cannot take too long to run or run infinite loop at some points",
+            "Prompt the user for input and output file names",
+            "Create the output to save the sorted words. DO NOT overwrite the original input file.",
+            "Change all words to lower case",
+            "You have to count number of matching words before you declare the size of the array",
+            "If words have a punctuation symbol at the beginning or at the end of the words then remove the punctuation marks from both sides of the word, keep the word.",
+            "If words still have any symbol except '-' and letter, then ignore the word",
+            "Ignore the words that contain digits",
+            "Remove spaces from both sides of the words",
+            "Save the words in a file",
+            "Sort the words in alphabetical order",
+            "Save only one instance of each word, if there are many occurrences of the same word",
+            "The input file (unsorted.txt) is used to test your program. If the output misses/contains too many/few words, it will be considered as bugs.",
+            "You are not allowed to use Java sort methods",
+            "Do not overwrite the original input file",
+            "The program should create an output file if the output does not exist.",
+            "Print number of the words, and frequency of each letter ('a' to 'z'), ignore cases",
+            "DO NOT use ArrayList because students in 1150 never have an chance to learn it. It is NOT fair that you used ArrayList",
+            "DO NOT declare a string array with fixed number of elements. You have to count number of matching words before you declare the size of the array",
+            "Take too much time to run the program",
+            "header information at the top of the program [include your name, class section and program description]",
+            "Use Javadoc comment style and comment your class",
+            "- describe the parameter(s) required for each method",
+            "- describe the return value (or output) for each method",
+            "- describe the purpose of the program",
+            "- Comment should be placed on the top of the method",
+            "indentation & alignment",
+            "Do not use any magic numbers and please use variables for any calculations"
+        ],
+        "title": "Text File Processor"
+    },
+    "students": [
+        {
+            "code_analysis": {
+                "documentation": [
+                    "Javadoc style comments are used consistently throughout the code.",
+                    "All methods have descriptions of their parameters, return values, and purpose.",
+                    "Program header includes author, ID, date, and compiler information in Javadoc style.",
+                    "Purpose of the program is well-documented in the main method's Javadoc comment"
+                ],
+                "linting_errors": [],
+                "missing_requirements": [],
+                "readability": [
+                    "Code is well-formatted with consistent indentation and alignment.",
+                    "Variable names are descriptive and meaningful.",
+                    "Methods are logically organized and separated into smaller, manageable functions.",
+                    "Comments are clear and concise, explaining the purpose of code segments"
+                ],
+                "restricted_usage": [
+                    "ArrayList is not used, as per the requirements."
+                ]
+            },
+            "filename": "crashbandicoot.java",
+            "methods": [
+                {
+                    "errors": [],
+                    "expected_prototype": "public static int countWords(File file)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static int countWords(File file)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static String[] getWordsFromFile(File file, int size)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static String[] getWordsFromFile(File file, int size)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static void printWordCountAndLetterFrequency(String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static void printWordCountAndLetterFrequency(String[] words)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static int[] getLetterFrequency(String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static int[] getLetterFrequency(String[] words)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static void cleanWords(String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static void cleanWords(String[] words)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static String trimNonLetters(String word)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static String trimNonLetters(String word)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static boolean isInvalidWord(String word)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static boolean isInvalidWord(String word)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static String[] removeEmptyStrings(String[] arr)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static String[] removeEmptyStrings(String[] arr)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static int countNonEmptyStrings(String[] arr)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static int countNonEmptyStrings(String[] arr)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static void sortArray(String[] arr)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static void sortArray(String[] arr)",
+                    "time_complexity": "O(n^2)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static String[] getUniqueWords(String[] arr)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static String[] getUniqueWords(String[] arr)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static int countUniqueWords(String[] arr)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static int countUniqueWords(String[] arr)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static void writeToFile(String[] words, File outputFile)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static void writeToFile(String[] words, File outputFile)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static boolean isALetter(char character)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static boolean isALetter(char character)",
+                    "time_complexity": "O(1)"
+                }
+            ],
+            "name": "Crash Bandicoot"
+        },
+        {
+            "code_analysis": {
+                "documentation": [
+                    "The code includes a header with author information, date, and program name.",
+                    "There are comments in some parts of the code, but the level of detail and consistency could be improved. Javadoc style commenting is not used consistently"
+                ],
+                "linting_errors": [],
+                "missing_requirements": [
+                    "The program does not handle exceptions, which can lead to unexpected crashes.",
+                    "The program should print the letter frequencies"
+                ],
+                "readability": [
+                    "The code is somewhat readable but could benefit from more comments, especially to explain the logic behind some operations.",
+                    "Method names are mostly clear but could be made more descriptive in some cases.",
+                    "The code could be structured into more methods or functions for better modularity and readability"
+                ],
+                "restricted_usage": []
+            },
+            "filename": "sonichedgehog.java",
+            "methods": [
+                {
+                    "errors": [],
+                    "expected_prototype": "public static String[] filterWords(String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static String[] filterWords(String[] words)",
+                    "time_complexity": "O(n^2)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static boolean isLetter(char c)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static boolean isLetter(char c)",
+                    "time_complexity": "O(1)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static String[] wordSorter(String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static String[] wordSorter(String[] words)",
+                    "time_complexity": "O(n^2)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static String[] removeDuplicates(String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static String[] removeDuplicates(String[] words)",
+                    "time_complexity": "O(n^2)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static void saveToFile(String[] words, String fileName)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static void saveToFile(String[] words, String fileName)",
+                    "time_complexity": "O(n)"
+                }
+            ],
+            "name": "Sonic Hedgehog"
+        },
+        {
+            "code_analysis": {
+                "documentation": [
+                    "The code has header comments that include author name, date, and program description.",
+                    "Some methods include comments, but there is not consistent Javadoc style commenting"
+                ],
+                "linting_errors": [],
+                "missing_requirements": [
+                    "The program does not explicitly handle the case where the input file does not exist.",
+                    "There is no explicit handling for potential exceptions during file I/O operations.",
+                    "The program does not print letter frequencies in the console.",
+                    "The program uses a set for unique words instead of an array, this is not allowed according to the requirements.",
+                    "The sort method used is not specified, and may not comply with the instructions"
+                ],
+                "readability": [
+                    "The code could benefit from using more descriptive variable and method names.",
+                    "The logic for handling words with non-letter symbols could be simplified and made more efficient.",
+                    "Adding more comments would enhance readability and make the code easier to understand"
+                ],
+                "restricted_usage": []
+            },
+            "filename": "drybones.java",
+            "methods": [
+                {
+                    "errors": [],
+                    "expected_prototype": "private static int countWordsInFile(String fileName)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "private static int countWordsInFile(String fileName)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "private static void readWordsFromFile(String fileName, String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "private static void readWordsFromFile(String fileName, String[] words)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "private static void cleanWords(String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "private static void cleanWords(String[] words)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "private static void printLetterCount(String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "private static void printLetterCount(String[] words)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "private static void sortWords(String[] words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "private static void sortWords(String[] words)",
+                    "time_complexity": "O(n^2)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "private static void saveUniqueWords(String[] words, String outputFileName)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "private static void saveUniqueWords(String[] words, String outputFileName)",
+                    "time_complexity": "O(n)"
+                }
+            ],
+            "name": "Dry Bones"
+        },
+        {
+            "code_analysis": {
+                "documentation": [],
+                "linting_errors": [],
+                "missing_requirements": [
+                    "The program does not meet the requirement of not using ArrayList.",
+                    "The program does not prompt the user for input and output file names.",
+                    "The program overwrites the original input file instead of creating a new output file.",
+                    "The program does not count words before declaring the size of the array.",
+                    "The program does not sort the words using a custom sorting method.",
+                    "The program does not print letter frequencies.",
+                    "The program uses Java's built in sorting mechanism which is not allowed"
+                ],
+                "readability": [],
+                "restricted_usage": [
+                    "The program uses ArrayList which is not allowed according to the requirements"
+                ]
+            },
+            "filename": "spyrothedragon.java",
+            "methods": [
+                {
+                    "errors": [],
+                    "expected_prototype": "public static List<String> readAndProcessWords(Scanner input)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static List<String> readAndProcessWords(Scanner input)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static int[] countLetterFrequencies(List<String> words)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static int[] countLetterFrequencies(List<String> words)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static void printLetterFrequencies(int[] letterFrequency)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static void printLetterFrequencies(int[] letterFrequency)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
+                    "expected_prototype": "public static void saveWordsToFile(Set<String> words, String outputFileName)",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static void saveWordsToFile(Set<String> words, String outputFileName)",
+                    "time_complexity": "O(n)"
+                }
+            ],
+            "name": "Spyro the Dragon"
+        }
+    ]
+}
