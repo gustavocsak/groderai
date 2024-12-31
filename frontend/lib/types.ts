@@ -22,8 +22,14 @@ export type Method = {
   time_complexity: string;
 };
 
-export type ApiResponse = {
-  code_analysis: CodeAnalysis;
-  metadata: Metadata;
+export type Student = {
+  name: string;
+  filename: string;
   methods: Method[];
+  code_analysis: CodeAnalysis;
+};
+
+export type ApiResponse = {
+  metadata: Metadata;
+  students: Student[];
 };

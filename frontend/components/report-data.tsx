@@ -10,7 +10,10 @@ interface ReportDataProps {
 
 export function ReportData({ data }: ReportDataProps) {
   return (
-    <Tabs defaultValue="metadata" className="flex flex-col w-11/12 h-full">
+    <Tabs
+      defaultValue="metadata"
+      className="flex flex-col w-11/12 h-full max-h-full"
+    >
       <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="metadata">Metadata</TabsTrigger>
         <TabsTrigger value="code-analysis">Code Analysis</TabsTrigger>
@@ -20,10 +23,10 @@ export function ReportData({ data }: ReportDataProps) {
         <MetadataCard metadata={data.metadata} />
       </TabsContent>
       <TabsContent value="code-analysis" className="flex-1">
-        <AnalysisCard analysis={data.code_analysis} />
+        <AnalysisCard analysis={data.students[0].code_analysis} />
       </TabsContent>
       <TabsContent value="methods" className="flex-1">
-        <MethodCard methods={data.methods} />
+        <MethodCard methods={data.students[0].methods} />
       </TabsContent>
     </Tabs>
   );

@@ -13,7 +13,7 @@ export default function Report() {
       <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
         <GridLoader
           color="#e11d48"
-          size={20}
+          size={17}
           aria-label="Loading Spinner"
           data-testid="loader"
         />
@@ -21,11 +21,7 @@ export default function Report() {
     );
   }
   if (data) {
-    return (
-      <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
-        <ReportData data={data} />
-      </div>
-    );
+    return <ReportData data={data} />;
   }
   return (
     <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
