@@ -46,7 +46,7 @@ class Assignment(BaseModel):
 gemini_key = os.getenv('GEMINI_KEY')
 genai.configure(api_key=gemini_key)
 model = genai.GenerativeModel(
-  model_name="gemini-1.5-flash",
+  model_name="gemini-2.0-flash",
   system_instruction="Act as a coding assistant tool, report any errors and findings according to the assignment instructions given"
 )
 
@@ -78,15 +78,12 @@ def analyze_code(instructions, code, batch):
     linter_results = lint_code(code)
 
   prompt = f"""
-    You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing
-    and summarizing both the submitted code and the assignment instructions.
-    Your goal is to provide a clear and concise report based on the <DATA> section.
-
     <ROLE>
+    You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing
     Carefully examine the assignment instructions and the student's code.
     Identify and highlight key details and important information.
     Present your findings in alignment with the provided response schema.
-    You must fill all the fields in the report, if something is not applicable use "N/A"
+    Ensure all fields in the response schema are filled, if something is not applicable use "N/A"
     </ROLE>
 
     <DATA>
@@ -105,12 +102,10 @@ def analyze_code(instructions, code, batch):
   """
 
   prompt_batch = f"""
-    You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing
-    and summarizing both the submitted code and the assignment instructions.
-    Your goal is to provide a clear and concise report based on the <DATA> section.
-
     <ROLE>
-    Carefully examine the assignment instructions and analyze each student code separately that is delimited by the STUDENT tag.
+    You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing
+    Carefully examine the assignment instructions and provide answers for the metadata of the assignment.
+    Analyze each student code separately that is delimited by the STUDENT tag.
     Identify and highlight key details and important information.
     Present your findings in alignment with the provided response schema.
     You must fill all the fields in the report, if something is not applicable use "N/A"
