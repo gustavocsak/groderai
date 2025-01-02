@@ -122,8 +122,8 @@ export default function SidebarLeft({
           </div>
         </SidebarHeader>
         <SidebarContent>
-          <SidebarGroup className="px-0">
-            <SidebarGroupContent>
+          <SidebarGroup className="px-0 h-full">
+            <SidebarGroupContent className="h-full">
               {activeItem.title == "Upload" ? <AnalyzeForm /> : <FileView />}
             </SidebarGroupContent>
           </SidebarGroup>

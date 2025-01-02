@@ -9,7 +9,7 @@ import { Form, FormField } from "@/components/ui/form";
 import FileUpload from "./file-upload";
 import axios from "axios";
 import { useSetAtom } from "jotai";
-import { reportData, reportLoading } from "@/store/state";
+import { currentFile, reportData, reportLoading } from "@/store/state";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
@@ -36,6 +36,7 @@ const formSchema = z.object({
 export default function AnalyzeForm() {
   const setLoading = useSetAtom(reportLoading);
   const setData = useSetAtom(reportData);
+  const setCurrent = useSetAtom(currentFile);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,6 +56,9 @@ export default function AnalyzeForm() {
       });
       console.log(response.data);
       setData(response.data);
+
+      //TODO: handle this better
+      setCurrent(response.data.students[0]);
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {

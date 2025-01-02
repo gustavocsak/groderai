@@ -1,28 +1,48 @@
-// import { ApiResponse } from "@/lib/types";
-import { reportData } from "@/store/state";
-import { useAtom } from "jotai";
+import { currentFile, reportData } from "@/store/state";
+import { useAtom, useSetAtom } from "jotai";
 import { Button } from "./ui/button";
 import { File } from "lucide-react";
-
-// interface FileViewProps {
-//   data: ApiResponse;
-// }
+import { Student } from "@/lib/types";
+import { testdata } from "@/lib/types";
 
 export default function FileView() {
   const [data] = useAtom(reportData);
+  const [current, setCurrent] = useAtom(currentFile);
 
-  if (data) {
+  function handleFileClick(student: Student) {
+    if (student !== current) {
+      setCurrent(student);
+    }
+  }
+
+  if (testdata) {
     return (
-      <div className="flex flex-col space-y-1 p-4">
-        {data.students.map((student) => (
-          <Button variant="ghost" key={student.name} className="justify-start">
-            <File />
-            {student.filename}
+      <div className="flex flex-col justify-between h-full p-4">
+        <div className="flex flex-col space-y-1">
+          {testdata.students.map((student) => (
+            <Button
+              variant={current == student ? "outline" : "ghost"}
+              key={student.name}
+              className="justify-start"
+              onClick={() => handleFileClick(student)}
+            >
+              <File />
+              {student.filename}
+            </Button>
+          ))}
+        </div>
+        <div>
+          <Button className="w-full" variant="default">
+            Export to File
           </Button>
-        ))}
+        </div>
       </div>
     );
   }
 
-  return <p>no data</p>;
+  return (
+    <div className="flex flex-col space-y-1 p-4">
+      Files that you submit for analysis will appear here
+    </div>
+  );
 }
