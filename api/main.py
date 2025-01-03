@@ -44,7 +44,7 @@ class Assignment(BaseModel):
 gemini_key = os.getenv('GEMINI_KEY')
 genai.configure(api_key=gemini_key)
 model = genai.GenerativeModel(
-  model_name="gemini-2.0-flash-exp",
+  model_name="gemini-1.5-flash",
   system_instruction="Act as a coding assistant tool, identify fields in the assignment and report any errors in the code"
 )
 
@@ -126,19 +126,6 @@ def analyze_code(instructions, code, batch):
       </LINTING_RESULTS>
     </DATA>
   """
-
-
-  test_prompt = f"""
-  <ROLE>
-  You are GroderAI, an AI tool for grading assignments. Follow the schema strictly.
-  </ROLE>
-  <DATA>
-  <INSTRUCTIONS>{instructions}</INSTRUCTIONS>
-  <CODE>{code}</CODE>
-  <LINTING_RESULTS>{linter_results}</LINTING_RESULTS>
-  </DATA>
-  """
-  print(prompt_batch)
 
   result = model.generate_content(
     prompt if batch == 1 else prompt_batch,
