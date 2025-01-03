@@ -32,7 +32,6 @@ def analyze():
     extract_path = None
     try:
       instructions_content = instructions.stream.read().decode('utf-8')
-      print("here")
       if not code.filename.endswith(".zip"):
         code_content = code.stream.read().decode('utf-8')
         parsed_data = analyze_code(instructions_content, code_content, 1)
@@ -58,7 +57,6 @@ def analyze():
             with open(file_path, 'r', encoding='utf-8') as f:
                 all_code_content += f"\n\n// File name: {file}\n" + f.read()
             all_code_content += "</STUDENT>\n"
-
 
       parsed_data = analyze_code(instructions_content, all_code_content, 2)
 

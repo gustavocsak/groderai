@@ -1,6 +1,6 @@
 {
     "metadata": {
-        "description": "This program reads a text file word by word, saves it in an array of Strings, processes the words, sorts the words in alphabetical order, keeps only one instance of each word and saves them in sorted order in another file.",
+        "description": "This program reads a text file word by word, saves it in an array of Strings, processes the words, sorts the words in alphabetical order, keeps only one instance of each word and saves them in sorted order in another file. Additionally, the program will print number of the words, and frequency of each letter ('a' to 'z'), ignoring cases.",
         "language": "Java",
         "requirements": [
             "No Syntax Errors",
@@ -23,17 +23,17 @@
             "Do not overwrite the original input file",
             "The program should create an output file if the output does not exist.",
             "Print number of the words, and frequency of each letter ('a' to 'z'), ignore cases",
-            "DO NOT use ArrayList because students in 1150 never have an chance to learn it. It is NOT fair that you used ArrayList",
-            "DO NOT declare a string array with fixed number of elements. You have to count number of matching words before you declare the size of the array",
+            "DO NOT use ArrayList",
+            "DO NOT declare a string array with fixed number of elements.",
             "Take too much time to run the program",
             "header information at the top of the program [include your name, class section and program description]",
             "Use Javadoc comment style and comment your class",
-            "describe the parameter(s) required for each method",
-            "describe the return value (or output) for each method",
-            "describe the purpose of the program",
-            "Comment should be placed on the top of the method",
+            "- describe the parameter(s) required for each method",
+            "- describe the return value (or output) for each method",
+            "- describe the purpose of the program",
+            "- Comment should be placed on the top of the method",
             "indentation & alignment",
-            "Do not use any magic numbers and please use variables for any calculations"
+            "Do not use any magic numbers and please use variables for any calculations."
         ],
         "title": "Lab10"
     },
@@ -41,23 +41,30 @@
         {
             "code_analysis": {
                 "documentation": [
-                    "Javadoc style comments are used throughout the code.",
-                    "Each method has a detailed description of its purpose, parameters, and return value.",
-                    "The class is documented with a description of the program's purpose and author information.",
-                    "Comments are placed at the top of each method"
+                    "The code includes Javadoc comments for the class and methods, describing parameters, return values, and purpose.",
+                    "Comments are placed at the top of methods."
                 ],
                 "linting_errors": [],
                 "missing_requirements": [],
                 "readability": [
-                    "Code is well-formatted with consistent indentation and spacing.",
-                    "Variable names are descriptive and meaningful.",
-                    "The logic is clear and easy to follow.",
-                    "Code is well-commented and easy to understand"
+                    "The code is well-indented and aligned, making it easy to read.",
+                    "Variables are used for calculations, avoiding magic numbers."
                 ],
-                "restricted_usage": []
+                "restricted_usage": [
+                    "The code does not use ArrayList or Java sort methods as restricted.",
+                    "The code dynamically allocates the size of String array."
+                ]
             },
             "filename": "crashbandicoot.java",
             "methods": [
+                {
+                    "errors": [],
+                    "expected_prototype": "public static void main(String[] args) throws FileNotFoundException",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static void main(String[] args) throws FileNotFoundException",
+                    "time_complexity": "O(n)"
+                },
                 {
                     "errors": [],
                     "expected_prototype": "public static int countWords(File file) throws FileNotFoundException",
@@ -171,40 +178,47 @@
                     "time_complexity": "O(1)"
                 }
             ],
-            "name": "Crash Bandicoot"
+            "name": "Crash Bandicoot",
+            "summary": [
+                "The student's code fulfills all requirements. The code has no syntax errors, no runtime errors, contains more than 5 methods, does not take too long to run, and prompts the user for file names.",
+                "The code successfully processes words from the input file, handles words with punctuation, ignores non-letter words, and saves unique sorted words to the output file, along with printing the total number of words and letter frequencies.",
+                "The code adheres to all restrictions, avoiding the use of ArrayList, and correctly declaring the array size after counting words.",
+                "The program follows the correct documentation style."
+            ]
         },
         {
             "code_analysis": {
                 "documentation": [
-                    "The code includes a header comment with the program name, author, ID, and date.",
-                    "There are comments explaining certain sections of the code, but not in Javadoc style for all methods.",
-                    "Some methods lack proper documentation or clear explanations of their purpose and functionality"
+                    "The code includes comments, although they lack the detailed Javadoc-style documentation that was asked for the methods"
                 ],
                 "linting_errors": [],
-                "missing_requirements": [
-                    "The program does not use Javadoc style comments for all methods.",
-                    "The program does not check for and handle exceptions properly. The try-catch block could be improved for better error handling.",
-                    "The program takes too long to run in cases of a large number of words, causing the program to fail."
-                ],
+                "missing_requirements": [],
                 "readability": [
-                    "The code uses descriptive variable names, but some parts could be more concise.",
-                    "The logic for filtering words is complex and could be improved for better readability.",
-                    "Some of the comments do not add value and are not necessary."
+                    "The code is generally readable, with consistent indentation and formatting.",
+                    "Variables are used for calculations, avoiding magic numbers."
                 ],
                 "restricted_usage": [
-                    "The program uses the Scanner class repeatedly, which might impact the efficiency and performance for large files.",
-                    "The program fails to handle the cases of incorrect user input and improper file access."
+                    "The code does not use ArrayList and does not use java sort methods, as specified.",
+                    "The code dynamically allocates the size of String array."
                 ]
             },
             "filename": "sonichedgehog.java",
             "methods": [
                 {
                     "errors": [],
+                    "expected_prototype": "public static void main(String[] args) throws FileNotFoundException",
+                    "is_correct": true,
+                    "is_documented": false,
+                    "prototype": "public static void main(String[] args) throws FileNotFoundException",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
                     "expected_prototype": "public static String[] filterWords(String[] words)",
                     "is_correct": true,
                     "is_documented": true,
                     "prototype": "public static String[] filterWords(String[] words)",
-                    "time_complexity": "O(n^2)"
+                    "time_complexity": "O(n)"
                 },
                 {
                     "errors": [],
@@ -239,34 +253,41 @@
                     "time_complexity": "O(n)"
                 }
             ],
-            "name": "Sonic Hedgehog"
+            "name": "Sonic Hedgehog",
+            "summary": [
+                "The student's code meets the functional requirements. It handles file input/output, processes words by lowercasing, and filtering out invalid characters, sorting them alphabetically, removing duplicates, and writing to a file.",
+                "The program correctly prompts the user for input and output file names, and the output file contains correctly processed words.",
+                "The code also calculates the word count and letter frequency correctly",
+                "However, it lacks the Javadoc-style comments that was asked for"
+            ]
         },
         {
             "code_analysis": {
                 "documentation": [
-                    "The code includes a header comment with program information.",
-                    "Methods have comments explaining their purpose, but not in Javadoc style.",
-                    "Some comments could be more descriptive and informative.",
-                    "The code lacks Javadoc-style comments for most of the methods which makes it hard to understand the methods' purpose and parameters."
+                    "The code has comments, but lacks detailed Javadoc style comments."
                 ],
                 "linting_errors": [],
                 "missing_requirements": [
-                    "The code does not handle potential exceptions during file operations which is a major flaw.",
-                    "The code should be improved to handle cases where the input file might not be found or might be empty",
-                    "The code is not efficient and it might take a long time to sort arrays of larger sizes.  The bubble sort algorithm has O(n^2) complexity which is very inefficient. "
+                    "The code uses regular expressions, but the instructions asked to iterate by characters"
                 ],
                 "readability": [
-                    "Code is generally readable but could benefit from more consistent formatting and spacing.",
-                    "The use of regular expressions in cleanWords() is concise but may not be easy to understand for everyone.",
-                    "The logic for handling words with internal symbols could be made clearer."
+                    "The code is generally readable with good indentations."
                 ],
                 "restricted_usage": [
-                    "The code uses a Set (LinkedHashSet) to store unique words, which might not be allowed according to assignment restrictions.",
-                    "The program uses bubble sort for sorting which is inefficient for large input files"
+                    "The code does not use ArrayList as restricted.",
+                    "The code dynamically allocates the size of String array."
                 ]
             },
             "filename": "drybones.java",
             "methods": [
+                {
+                    "errors": [],
+                    "expected_prototype": "public static void main(String[] args) throws IOException",
+                    "is_correct": true,
+                    "is_documented": true,
+                    "prototype": "public static void main(String[] args) throws IOException",
+                    "time_complexity": "O(n)"
+                },
                 {
                     "errors": [],
                     "expected_prototype": "private static int countWordsInFile(String fileName) throws IOException",
@@ -316,41 +337,45 @@
                     "time_complexity": "O(n)"
                 }
             ],
-            "name": "Dry Bones"
+            "name": "Dry Bones",
+            "summary": [
+                "The student's code meets all functional requirements. It handles file input/output, processes words by lowercasing, and filtering out invalid characters, sorting them alphabetically, removing duplicates, and writing to a file.",
+                "The program prompts the user for input and output file names, and the output file contains correctly processed words.",
+                "The code calculates word count and letter frequencies correctly",
+                "However, the code uses regular expressions which was not asked, and lacks the Javadoc style comments that was asked for"
+            ]
         },
         {
             "code_analysis": {
                 "documentation": [
-                    "The code lacks comprehensive documentation, especially for methods.  Comments are sparse and do not provide sufficient explanations of the code's functionality.",
-                    "There are very few comments that describe purpose, parameters, and return values of methods."
+                    "The code has comments describing the methods, however, it lacks the detailed Javadoc style comments that was requested."
                 ],
-                "linting_errors": [
-                    "The code uses ArrayList, which is not allowed according to the assignment instructions.",
-                    "The code uses TreeSet, which is a Java library method for sorting."
-                ],
+                "linting_errors": [],
                 "missing_requirements": [
-                    "The program does not check for and handle exceptions properly.",
-                    "The program uses Java's built-in sorting capabilities (TreeSet).",
-                    "The program does not save the unique words to the output file properly. It saves the words to a hardcoded file name instead of using the user-specified output file name.",
-                    "The program does not prompt the user for input and output filenames.",
-                    "The program does not provide feedback to the user on whether the process was successful.  This program does not meet most of the requirements of the assignment and should be considered incomplete."
+                    "The code uses ArrayList which was forbidden.",
+                    "The code uses TreeSet which was not allowed since student was asked to implement their own sorting algorithm.",
+                    "The code does not dynamically allocate the size of the array"
                 ],
                 "readability": [
-                    "The code is not well-organized and lacks clear structure. The methods are not well separated.",
-                    "The logic is hard to follow in several places, and the code could be made more concise and efficient.",
-                    "The code's functionality is unclear and difficult to understand due to the lack of comments."
+                    "The code is generally readable."
                 ],
-                "restricted_usage": [
-                    "The code uses ArrayList and TreeSet which are not allowed according to the assignment instructions."
-                ]
+                "restricted_usage": []
             },
             "filename": "spyrothedragon.java",
             "methods": [
                 {
                     "errors": [],
+                    "expected_prototype": "public static void main(String[] args)",
+                    "is_correct": true,
+                    "is_documented": false,
+                    "prototype": "public static void main(String[] args)",
+                    "time_complexity": "O(n)"
+                },
+                {
+                    "errors": [],
                     "expected_prototype": "public static List<String> readAndProcessWords(Scanner input)",
                     "is_correct": true,
-                    "is_documented": true,
+                    "is_documented": false,
                     "prototype": "public static List<String> readAndProcessWords(Scanner input)",
                     "time_complexity": "O(n)"
                 },
@@ -358,7 +383,7 @@
                     "errors": [],
                     "expected_prototype": "public static int[] countLetterFrequencies(List<String> words)",
                     "is_correct": true,
-                    "is_documented": true,
+                    "is_documented": false,
                     "prototype": "public static int[] countLetterFrequencies(List<String> words)",
                     "time_complexity": "O(n)"
                 },
@@ -366,20 +391,25 @@
                     "errors": [],
                     "expected_prototype": "public static void printLetterFrequencies(int[] letterFrequency)",
                     "is_correct": true,
-                    "is_documented": true,
+                    "is_documented": false,
                     "prototype": "public static void printLetterFrequencies(int[] letterFrequency)",
-                    "time_complexity": "O(1)"
+                    "time_complexity": "O(n)"
                 },
                 {
                     "errors": [],
                     "expected_prototype": "public static void saveWordsToFile(Set<String> words, String outputFileName)",
                     "is_correct": true,
-                    "is_documented": true,
+                    "is_documented": false,
                     "prototype": "public static void saveWordsToFile(Set<String> words, String outputFileName)",
                     "time_complexity": "O(n)"
                 }
             ],
-            "name": "Spyro the Dragon"
+            "name": "Spyro The Dragon",
+            "summary": [
+                "The student's code fulfills most functional requirements but violates some restrictions by using ArrayList and TreeSet. While the code processes words, removes duplicates, and saves them, it does not adhere to restrictions.",
+                "The code does not count the number of words. The code does not dynamically allocate the size of the array",
+                "The code lacks proper documentation using Javadoc style comments as requested."
+            ]
         }
     ]
 }

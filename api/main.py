@@ -35,19 +35,17 @@ class Student(BaseModel):
   filename: str
   methods: list[Method]
   code_analysis: CodeAnalysis
+  summary: list[str]
 
 class Assignment(BaseModel):
   metadata: Metadata
   students: list[Student]
 
-
-
-
 gemini_key = os.getenv('GEMINI_KEY')
 genai.configure(api_key=gemini_key)
 model = genai.GenerativeModel(
-  model_name="gemini-2.0-flash",
-  system_instruction="Act as a coding assistant tool, report any errors and findings according to the assignment instructions given"
+  model_name="gemini-2.0-flash-exp",
+  system_instruction="Act as a coding assistant tool, identify fields in the assignment and report any errors in the code"
 )
 
 def lint_code(code):
@@ -80,8 +78,9 @@ def analyze_code(instructions, code, batch):
   prompt = f"""
     <ROLE>
     You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing
-    Carefully examine the assignment instructions and the student's code.
+    Carefully examine the assignment instructions and provide answers for the metadata of the assignment.
     Identify and highlight key details and important information.
+    Provide a concise summary of important points to pay attention when grading that file.
     Present your findings in alignment with the provided response schema.
     Ensure all fields in the response schema are filled, if something is not applicable use "N/A"
     </ROLE>
@@ -103,19 +102,20 @@ def analyze_code(instructions, code, batch):
 
   prompt_batch = f"""
     <ROLE>
-    You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing
-    Carefully examine the assignment instructions and provide answers for the metadata of the assignment.
-    Analyze each student code separately that is delimited by the STUDENT tag.
-    Identify and highlight key details and important information.
-    Present your findings in alignment with the provided response schema.
-    You must fill all the fields in the report, if something is not applicable use "N/A"
-    Separate your analysis by students.
+    You are GroderAI, an AI tool designed to assist in grading coding assignments by analyzing assignment instructions, student code, and linting results. Your job is to provide a detailed report strictly following the response schema.
+
+    **Key Rules:**
+    1. Adhere strictly to the schema. Do not include any extra information or omit required fields.
+    2. Identify key information in the assignment instructions and populate the metadata field of the assignment.
+    3. Analyze each code provided and populate the fields needed.
+    4. If a field is not applicable, write "N/A."
+    5. Separate your analysis by students.
     </ROLE>
 
     <DATA>
-      <INSTRUCTIONS>
+      <ASSIGNMENT_INSTRUCTIONS>
       {instructions}
-      </INSTRUCTIONS>
+      </ASSIGNMENT_INSTRUCTIONS>
 
       <CODE>
       {code}
@@ -127,7 +127,18 @@ def analyze_code(instructions, code, batch):
     </DATA>
   """
 
-  print(prompt)
+
+  test_prompt = f"""
+  <ROLE>
+  You are GroderAI, an AI tool for grading assignments. Follow the schema strictly.
+  </ROLE>
+  <DATA>
+  <INSTRUCTIONS>{instructions}</INSTRUCTIONS>
+  <CODE>{code}</CODE>
+  <LINTING_RESULTS>{linter_results}</LINTING_RESULTS>
+  </DATA>
+  """
+  print(prompt_batch)
 
   result = model.generate_content(
     prompt if batch == 1 else prompt_batch,
@@ -140,18 +151,18 @@ def analyze_code(instructions, code, batch):
 
 
 
-  try:
-      # Attempt to load the JSON data
-    parsed_data = json.loads(result.text)
-  except json.JSONDecodeError as e:
-    print(f"Error decoding JSON: {e}")
-    # Optionally write the raw response to a file for inspection
-    with open("raw_response.txt", "w") as raw_file:
-      raw_file.write(result.text)
-    return "error"
+  # try:
+  #     # Attempt to load the JSON data
+  #   parsed_data = json.loads(result.text)
+  # except json.JSONDecodeError as e:
+  #   print(f"Error decoding JSON: {e}")
+  #   # Optionally write the raw response to a file for inspection
+  #   with open("raw_response.txt", "w") as raw_file:
+  #     raw_file.write(result.text)
+  #   return "error"
 
-  # Write parsed data to a JSON file
-  with open("parsed_data.json", "w") as outfile:
-    json.dump(parsed_data, outfile, indent=4)
+  # # Write parsed data to a JSON file
+  # with open("parsed_data.json", "w") as outfile:
+  #   json.dump(parsed_data, outfile, indent=4)
 
   return parsed_data
