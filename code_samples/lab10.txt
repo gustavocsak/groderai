@@ -1,0 +1,51 @@
+Program Requirement
+
+No Syntax Errors
+No Runtime Errors
+Program must contains at least 5 methods
+The program cannot take too long to run or run infinite loop at some points
+
+
+Correctness of the program
+Prompt the user for input and output file names
+Create the output to save the sorted words. DO NOT overwrite the original input file.
+Change all words to lower case
+You have to count number of matching words before you declare the size of the array
+If words have a punctuation symbol at the beginning or at the end of the words then remove the punctuation marks from both sides of the word, keep the word.
+If words still have any symbol except '-' and letter, then ignore the word
+Ignore the words that contain digits
+Remove spaces from both sides of the words
+
+
+Save the words in a file
+Sort the words in alphabetical order
+Save only one instance of each word, if there are many occurrences of the same word
+The input file (unsorted.txt) is used to test your program. If the output misses/contains too many/few words, it will be considered as bugs.
+You are not allowed to use Java sort methods
+Do not overwrite the original input file
+The program should create an output file if the output does not exist.
+
+
+Print number of the words, and frequency of each letter ('a' to 'z'), ignore cases
+
+Other:
+
+DO NOT use ArrayList because students in 1150 never have an chance to learn it. It is NOT fair that you used ArrayList
+
+DO NOT declare a string array with fixed number of elements. You have to count number of matching words before you declare the size of the array
+
+Take too much time to run the program
+
+
+header information at the top of the program [include your name, class section and program description]
+
+Use Javadoc comment style and comment your class
+- describe the parameter(s) required for each method
+- describe the return value (or output) for each method
+- describe the purpose of the program
+- Comment should be placed on the top of the method
+
+
+indentation & alignment
+
+Do not use any magic numbers and please use variables for any calculations.
