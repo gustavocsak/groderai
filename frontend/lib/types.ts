@@ -27,6 +27,7 @@ export type Student = {
   filename: string;
   methods: Method[];
   code_analysis: CodeAnalysis;
+  summary: string[];
 };
 
 export type ApiResponse = {

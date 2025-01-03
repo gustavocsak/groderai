@@ -1,25 +1,22 @@
 import { currentFile, reportData } from "@/store/state";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { Button } from "./ui/button";
 import { File } from "lucide-react";
 import { Student } from "@/lib/types";
-import { testdata } from "@/lib/types";
 
 export default function FileView() {
   const [data] = useAtom(reportData);
   const [current, setCurrent] = useAtom(currentFile);
 
   function handleFileClick(student: Student) {
-    if (student !== current) {
-      setCurrent(student);
-    }
+    setCurrent(student);
   }
 
-  if (testdata) {
+  if (data) {
     return (
       <div className="flex flex-col justify-between h-full p-4">
         <div className="flex flex-col space-y-1">
-          {testdata.students.map((student) => (
+          {data.students.map((student) => (
             <Button
               variant={current == student ? "outline" : "ghost"}
               key={student.name}

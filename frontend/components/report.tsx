@@ -22,8 +22,8 @@ export default function Report() {
       </div>
     );
   }
-  if (data) {
-    return <ReportData data={current} metadata={data.metadata} />;
+  if (data && current) {
+    return <ReportData data={current} />;
   }
   return (
     <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">

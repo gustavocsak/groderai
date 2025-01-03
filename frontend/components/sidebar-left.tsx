@@ -3,6 +3,7 @@
 import * as React from "react";
 import { ArchiveX, Command, File, Inbox, Send, Trash2 } from "lucide-react";
 import AnalyzeForm from "./analyze-form";
+import AssignmentInfo from "./assignment-info";
 
 import { Label } from "@/components/ui/label";
 import {
@@ -19,9 +20,11 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import FileView from "./file-view";
+import { reportData } from "@/store/state";
+import { useAtom } from "jotai";
 
 // This is sample data
-const data = {
+const sidebarData = {
   user: {
     name: "shadcn",
     email: "m@example.com",
@@ -40,6 +43,12 @@ const data = {
       icon: File,
       isActive: false,
     },
+    {
+      title: "Assignment",
+      url: "#",
+      icon: Send,
+      isActive: false,
+    },
   ],
 };
 
@@ -48,8 +57,19 @@ export default function SidebarLeft({
 }: React.ComponentProps<typeof Sidebar>) {
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
-  const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
+  const [activeItem, setActiveItem] = React.useState(sidebarData.navMain[0]);
   const { setOpen } = useSidebar();
+
+  function switchTabs(active: string) {
+    switch (active) {
+      case "Upload":
+        return <AnalyzeForm />;
+      case "Files":
+        return <FileView />;
+      case "Assignment":
+        return <AssignmentInfo />;
+    }
+  }
 
   return (
     <Sidebar
@@ -85,7 +105,7 @@ export default function SidebarLeft({
           <SidebarGroup>
             <SidebarGroupContent className="px-1.5 md:px-0">
               <SidebarMenu>
-                {data.navMain.map((item) => (
+                {sidebarData.navMain.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       tooltip={{
@@ -124,7 +144,7 @@ export default function SidebarLeft({
         <SidebarContent>
           <SidebarGroup className="px-0 h-full">
             <SidebarGroupContent className="h-full">
-              {activeItem.title == "Upload" ? <AnalyzeForm /> : <FileView />}
+              {switchTabs(activeItem.title)}
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>

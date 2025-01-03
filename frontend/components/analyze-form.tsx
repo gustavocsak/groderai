@@ -49,16 +49,34 @@ export default function AnalyzeForm() {
       formData.append("instructions", values.instructions[0]);
       formData.append("code", values.code[0]);
 
-      const response = await axios.post("/api/analyze", formData, {
+      const response = await fetch("/api/analyze", {
+        method: "POST",
+        body: formData,
         headers: {
-          "Content-Type": "multipart/form-data",
+          Accept: "application/json",
         },
       });
-      console.log(response.data);
-      setData(response.data);
 
-      //TODO: handle this better
-      setCurrent(response.data.students[0]);
+      if (!response.ok) {
+        const errorText = await response.text(); // Get the raw response text if error occurs
+        console.error("Error response:", errorText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+
+      if (
+        Array.isArray(responseData.students) &&
+        responseData.students.length > 0
+      ) {
+        setData(responseData);
+        setCurrent(responseData.students[0]); // Set the first student
+      } else {
+        // Handle cases where no students are returned
+        console.warn("No students found in the response.");
+        setData(responseData);
+        setCurrent(null);
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {

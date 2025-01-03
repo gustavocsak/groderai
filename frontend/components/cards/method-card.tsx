@@ -17,7 +17,7 @@ export default function MethodCard({ methods }: MethodCardProps) {
   return (
     <Card className="h-full overflow-auto">
       <CardHeader>
-        <CardTitle className="text-xl">Methods</CardTitle>
+        <CardTitle className="text-2xl">Methods</CardTitle>
         <CardDescription>
           Here are the methods/functions that were identified in your code file
         </CardDescription>
