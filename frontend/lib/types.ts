@@ -95,6 +95,16 @@ export const testdata = {
         restricted_usage: [],
       },
       filename: "crashbandicoot.java",
+      summary: [
+        "Use Javadoc comment style and comment your class",
+        "describe the parameter(s) required for each method",
+        "describe the return value (or output) for each method",
+        "describe the purpose of the program",
+        "Comment should be placed on the top of the method",
+        "indentation & alignment",
+        "Do not use any magic numbers and please use variables for any calculations.",
+        "Use Javadoc comment style and comment your class",
+      ],
       methods: [
         {
           errors: [],

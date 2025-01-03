@@ -65,6 +65,8 @@ export default function AnalyzeForm() {
 
       const responseData = await response.json();
 
+      console.log(responseData);
+
       if (
         Array.isArray(responseData.students) &&
         responseData.students.length > 0

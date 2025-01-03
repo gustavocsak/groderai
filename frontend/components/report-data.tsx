@@ -20,7 +20,7 @@ export function ReportData({ data }: ReportDataProps) {
         <TabsTrigger value="methods">Methods</TabsTrigger>
       </TabsList>
       <TabsContent value="summary" className="flex-1 overflow-hidden">
-        <SummaryCard summary={data.summary} />
+        <SummaryCard student={data} />
       </TabsContent>
       <TabsContent value="code-analysis" className="flex-1">
         <AnalysisCard analysis={data.code_analysis} />

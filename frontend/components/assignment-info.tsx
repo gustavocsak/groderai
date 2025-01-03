@@ -54,7 +54,7 @@ export default function AssignmentInfo() {
           <p className="text-xl">{metadata.title}</p>
           <Badge variant="outline">{metadata.language}</Badge>
         </div>
-        <p>{metadata.description}</p>
+        <p>{metadata.summary}</p>
 
         <div className="space-y-4">
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>

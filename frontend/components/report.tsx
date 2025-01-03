@@ -5,6 +5,8 @@ import { reportLoading, reportData, currentFile } from "@/store/state";
 import { GridLoader } from "react-spinners";
 import { ReportData } from "./report-data";
 
+import { testdata } from "@/lib/types";
+
 export default function Report() {
   const [loading] = useAtom(reportLoading);
   const [data] = useAtom(reportData);
@@ -22,8 +24,8 @@ export default function Report() {
       </div>
     );
   }
-  if (data && current) {
-    return <ReportData data={current} />;
+  if (testdata) {
+    return <ReportData data={testdata.students[0]} />;
   }
   return (
     <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
