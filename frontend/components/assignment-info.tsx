@@ -9,8 +9,6 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronRight, Code2, FileText, Info } from "lucide-react";
 
-import { testdata } from "@/lib/types";
-
 export default function AssignmentInfo() {
   const [data] = useAtom(reportData);
   const [isOpen, setIsOpen] = useState(false);
@@ -138,5 +136,9 @@ export default function AssignmentInfo() {
     );
   }
 
-  return <p>no data</p>;
+  return (
+    <div className="flex flex-col space-y-1 p-4">
+      The assignment instructions that you submit for analysis will appear here
+    </div>
+  );
 }

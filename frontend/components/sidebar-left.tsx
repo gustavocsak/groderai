@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ArchiveX, Command, File, Inbox, Send, Trash2 } from "lucide-react";
+import { Album, FileCode, Inbox, Command } from "lucide-react";
 import AnalyzeForm from "./analyze-form";
 import AssignmentInfo from "./assignment-info";
 
@@ -40,13 +40,13 @@ const sidebarData = {
     {
       title: "Files",
       url: "#",
-      icon: File,
+      icon: FileCode,
       isActive: false,
     },
     {
       title: "Assignment",
       url: "#",
-      icon: Send,
+      icon: Album,
       isActive: false,
     },
   ],
