@@ -15,7 +15,7 @@ interface MethodCardProps {
 
 export default function MethodCard({ methods }: MethodCardProps) {
   return (
-    <Card className="h-full overflow-auto">
+    <Card className="h-full">
       <CardHeader>
         <CardTitle className="text-2xl">Methods</CardTitle>
         <CardDescription>

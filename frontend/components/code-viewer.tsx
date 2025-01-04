@@ -17,7 +17,7 @@ export default function CodeViewer({ content }: CodeViewerProps) {
   };
 
   return (
-    <Card className="relative border-secondary font-mono text-sm overflow-hidden">
+    <Card className="relative border font-mono text-sm overflow-hidden shadow-none">
       <Button
         variant="ghost"
         size="icon"

@@ -9,7 +9,7 @@ import {
 import { Student } from "@/lib/types";
 import { CircleCheck, UserRound } from "lucide-react";
 import { FileText } from "lucide-react";
-import { studentToMarkdown } from "@/lib/utils";
+import { studentToMarkdown, breakLongLine } from "@/lib/utils";
 import { SummaryCopy } from "../summary-copy";
 
 interface SummaryProps {
@@ -25,7 +25,7 @@ export default function SummaryCard({ student }: SummaryProps) {
   const summaryContent = student.summary.join("\n\n");
   const markdown = studentToMarkdown(student);
   return (
-    <Card className="h-full overflow-auto">
+    <Card className="h-full">
       <CardHeader>
         <CardTitle className="text-2xl">Summary</CardTitle>
         <CardDescription>
@@ -59,7 +59,7 @@ export default function SummaryCard({ student }: SummaryProps) {
         <div className="space-y-2">
           <h3 className="text-lg font-semibold mb-2">Notes: </h3>
           {student.summary.map((entry, index) => (
-            <p key={index}>{entry}</p>
+            <p key={index}>{entry.substring(0, 150)}</p>
           ))}
         </div>
 

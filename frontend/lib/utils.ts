@@ -30,3 +30,13 @@ export function studentToMarkdown(student: Student) {
 
   return md;
 }
+
+export function breakLongLine(line: string) {
+  const maxLength = 150;
+
+  for (let i = 0; i < line.length; i += maxLength) {
+    line =
+      line.substring(i, i + maxLength) + "\n" + line.substring(i + maxLength);
+  }
+  return line + "\n";
+}
