@@ -31,6 +31,31 @@ export function studentToMarkdown(student: Student) {
   return md;
 }
 
+export function studentToText(student: Student) {
+  let text = "";
+
+  const totalMethods = student.methods.length;
+  const correctMethods = student.methods.filter((m) => m.is_correct).length;
+  const documentedMethods = student.methods.filter(
+    (m) => m.is_documented,
+  ).length;
+
+  text += `${student.name}\n\n`;
+  text += `${student.filename}\n\n`;
+
+  text += `Methods:\n\n`;
+  text += `${correctMethods} / ${totalMethods} correct\n`;
+  text += `${documentedMethods} / ${totalMethods} documented\n\n`;
+
+  text += `Notes\n\n`;
+
+  for (const entry of student.summary) {
+    text += `- ${entry}\n`;
+  }
+
+  return text;
+}
+
 export function breakLongLine(line: string) {
   const maxLength = 150;
 

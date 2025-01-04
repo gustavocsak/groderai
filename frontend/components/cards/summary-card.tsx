@@ -9,7 +9,7 @@ import {
 import { Student } from "@/lib/types";
 import { CircleCheck, UserRound } from "lucide-react";
 import { FileText } from "lucide-react";
-import { studentToMarkdown, breakLongLine } from "@/lib/utils";
+import { studentToMarkdown, studentToText } from "@/lib/utils";
 import { SummaryCopy } from "../summary-copy";
 
 interface SummaryProps {
@@ -22,7 +22,7 @@ export default function SummaryCard({ student }: SummaryProps) {
   const documentedMethods = student.methods.filter(
     (m) => m.is_documented,
   ).length;
-  const summaryContent = student.summary.join("\n\n");
+  const summaryContent = studentToText(student);
   const markdown = studentToMarkdown(student);
   return (
     <Card className="h-full">
