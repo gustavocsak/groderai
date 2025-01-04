@@ -11,7 +11,7 @@ load_dotenv()
 
 class Metadata(BaseModel):
   title: str
-  description: str
+  summary: str
   requirements: list[str]
   language: str
 
@@ -107,8 +107,9 @@ def analyze_code(instructions, code, batch):
     **Key Rules:**
     1. Adhere strictly to the schema. Do not include any extra information or omit required fields.
     2. Identify key information in the assignment instructions and populate the metadata field of the assignment.
-    3. Analyze each code provided and populate the fields needed.
-    4. If a field is not applicable, write "N/A."
+    3. Analyze each code provided and populate the fields needed, dp not be vague, be extremely specific.
+    4. For the summary, be very specific, concise and direct. Break down phrases in multiple strings.
+    4. If a field is not applicable, write "N/A.
     5. Separate your analysis by students.
     </ROLE>
 
