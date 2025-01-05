@@ -25,7 +25,7 @@ export default function SummaryCard({ student }: SummaryProps) {
   const summaryContent = studentToText(student);
   const markdown = studentToMarkdown(student);
   return (
-    <Card className="h-full">
+    <Card className="h-full overflow-auto">
       <CardHeader>
         <CardTitle className="text-2xl">Summary</CardTitle>
         <CardDescription>

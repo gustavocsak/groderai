@@ -25,6 +25,7 @@ export default function Report() {
     );
   }
   if (testdata) {
+    // return <ReportData data={current} />;
     return <ReportData data={testdata.students[0]} />;
   }
   return (

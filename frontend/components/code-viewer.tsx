@@ -1,41 +1,43 @@
+import ClipboardCopy from "./clipboard-copy";
 import { Card } from "./ui/card";
-import { Check, Copy } from "lucide-react";
-import { Button } from "./ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { codeToHtml } from "@/lib/utils";
 
 interface CodeViewerProps {
   content: string;
+  language: string;
 }
 
-export default function CodeViewer({ content }: CodeViewerProps) {
-  const [isCopied, setIsCopied] = useState(false);
+export default function CodeViewer({ content, language }: CodeViewerProps) {
+  const [highlightedCode, setHighlightedCode] = useState<string>("");
 
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(content);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
-  };
+  useEffect(() => {
+    let isMounted = true;
+
+    const highlightCode = async () => {
+      const html = await codeToHtml(content, language);
+      if (isMounted) {
+        setHighlightedCode(html);
+      }
+    };
+
+    highlightCode();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [content, language]);
 
   return (
     <Card className="relative border font-mono text-sm overflow-hidden shadow-none">
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={copyToClipboard}
-        className="h-8 w-20 absolute top-4 right-8"
+      <ClipboardCopy content={content} />
+      <div
+        className="overflow-auto max-h-[500px] p-4"
+        dangerouslySetInnerHTML={{ __html: highlightedCode }}
       >
-        {isCopied ? (
-          <Check className="h-4 w-4" />
-        ) : (
-          <Copy className="h-4 w-4" />
-        )}
-        Copy
-        <span className="sr-only">Copy code</span>
-      </Button>
-      <div className="overflow-auto max-h-[450px] p-4">
-        <pre className="language-typescript">
-          <code>{content}</code>
-        </pre>
+        {/* <pre className={`whitespace-pre-wrap`}>
+          <code>{highlightedCode}</code>
+        </pre> */}
       </div>
     </Card>
   );

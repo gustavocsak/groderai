@@ -13,13 +13,13 @@ interface SummaryCopyProps {
 
 export function SummaryCopy({ markdown, text }: SummaryCopyProps) {
   return (
-    <Tabs defaultValue="markdown" className="relative mt-12">
+    <Tabs defaultValue="markdown" className="mt-12">
       <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
         <TabsTriggerSimple value="markdown">Markdown</TabsTriggerSimple>
         <TabsTriggerSimple value="text">Plain text</TabsTriggerSimple>
       </TabsList>
       <TabsContent value="markdown" className="flex-1">
-        <CodeViewer content={markdown} />
+        <CodeViewer content={markdown} language="markdown" />
       </TabsContent>
       <TabsContent value="text" className="flex-1">
         <CodeViewer content={text} />

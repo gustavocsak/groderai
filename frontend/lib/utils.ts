@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Student } from "./types";
+import { createHighlighter } from "shiki";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -64,4 +65,19 @@ export function breakLongLine(line: string) {
       line.substring(i, i + maxLength) + "\n" + line.substring(i + maxLength);
   }
   return line + "\n";
+}
+
+export async function codeToHtml(code: string, language: string) {
+  const highlighter = await createHighlighter({
+    themes: ["github-light", "github-dark"],
+    langs: ["java", "c++", "markdown"],
+  });
+
+  return highlighter.codeToHtml(code, {
+    lang: language,
+    themes: {
+      dark: "github-dark",
+      light: "github-light",
+    },
+  });
 }
