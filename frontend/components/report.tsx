@@ -24,9 +24,9 @@ export default function Report() {
       </div>
     );
   }
-  if (testdata) {
-    // return <ReportData data={current} />;
-    return <ReportData data={testdata.students[0]} />;
+  if (data) {
+    return <ReportData data={current} />;
+    // return <ReportData data={testdata.students[0]} />;
   }
   return (
     <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">

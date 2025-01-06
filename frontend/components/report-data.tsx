@@ -13,7 +13,7 @@ export function ReportData({ data }: ReportDataProps) {
   return (
     <Tabs
       defaultValue="summary"
-      className="flex flex-col h-full w-full max-w-2xl lg:max-w-7xl"
+      className="flex flex-col h-full w-full max-w-full"
     >
       <TabsList className="grid w-full grid-cols-4">
         <TabsTrigger value="summary">Summary</TabsTrigger>
