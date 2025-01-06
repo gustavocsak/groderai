@@ -1,3 +1,8 @@
+/**
+ * @author Gustavo
+ * @since 12-dec-2024
+ */
+
 public class sample2 {
 
   /**

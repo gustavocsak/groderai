@@ -49,16 +49,23 @@ def analyze():
         zip_ref.extractall(extract_path)
 
       all_code_content = ""
+      code_array = []
       for root, _, files in os.walk(extract_path):
         for file in files:
           if file.endswith(".java"):  # Only include Java files
             file_path = os.path.join(root, file)
             all_code_content += "<STUDENT>\n"
             with open(file_path, 'r', encoding='utf-8') as f:
-                all_code_content += f"\n\n// File name: {file}\n" + f.read()
+                content = f.read()
+                all_code_content += f"\n\n// File name: {file}\n" + content
+                code_array.append(content)
             all_code_content += "</STUDENT>\n"
 
       parsed_data = analyze_code(instructions_content, all_code_content, 2)
+      students = parsed_data.get("students", [])
+      for index, student in enumerate(students):
+        if index < len(code_array):
+          student["code"] = code_array[index]
 
       return parsed_data
     except Exception as e:
