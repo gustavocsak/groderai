@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Github, Twitter } from "lucide-react";
+import { Github } from "lucide-react";
 
 export default function Header() {
   return (
@@ -18,17 +18,9 @@ export default function Header() {
             GroderAI
           </Link>
           <div className="hidden md:flex space-x-8">
-            {/* <Link
-              href="#features"
-              className="text-sm text-gray-300 hover:text-white transition-colors"
-            >
-              Features
-            </Link>
-            <Link
-              href="#how-it-works"
-              className="text-sm text-gray-300 hover:text-white transition-colors"
-            >
-              How It Works
+            {/* Implement links later
+
+            It Works
             </Link>
             <Link
               href="#pricing"
@@ -47,9 +39,7 @@ export default function Header() {
             <Link
               href="https://twitter.com"
               className="text-gray-300 hover:text-white transition-colors"
-            >
-              {/* <Twitter className="w-5 h-5" /> */}
-            </Link>
+            ></Link>
           </div>
         </nav>
       </div>

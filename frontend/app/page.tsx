@@ -1,5 +1,7 @@
+import HowItWorks from "@/components/landing/how-it-works";
 import Header from "@/components/landing/header";
 import Hero from "@/components/landing/hero";
+import Footer from "@/components/landing/footer";
 
 import { AnimatePresence } from "framer-motion";
 
@@ -10,6 +12,8 @@ export default function Home() {
       <AnimatePresence>
         <main className="h-full flex flex-col flex-1">
           <Hero />
+          <HowItWorks />
+          <Footer />
         </main>
       </AnimatePresence>
     </div>
