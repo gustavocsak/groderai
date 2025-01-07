@@ -31,7 +31,7 @@ export default function Header() {
           </div>
           <div className="flex items-center space-x-4">
             <Link
-              href="https://github.com"
+              href="https://github.com/gustavocsak/groderai"
               className="text-gray-300 hover:text-white transition-colors"
             >
               <Github className="w-5 h-5" />

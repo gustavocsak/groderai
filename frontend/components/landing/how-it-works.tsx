@@ -123,7 +123,9 @@ export default function HowItWorks() {
         <div className="text-center max-w-4xl mx-auto mb-16">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
+            // animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="text-4xl md:text-6xl font-bold text-white mb-6"
           >
@@ -131,7 +133,9 @@ export default function HowItWorks() {
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            // animate={{ opacity: 1 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xl text-gray-400"
           >
@@ -144,8 +148,10 @@ export default function HowItWorks() {
         {/* Dashboard Preview */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          // animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
+          viewport={{ once: true }}
           className="relative mx-auto max-w-7xl"
         >
           <div className="relative rounded-lg shadow-2xl">
@@ -169,9 +175,11 @@ export default function HowItWorks() {
         <div className="grid md:grid-cols-2 mx-auto max-w-6xl justify-items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="space-y-4 p-16 border-r border-gray-800"
+            // animate={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            viewport={{ once: true }}
+            className="space-y-4 p-16 md:border-r border-gray-800"
           >
             <h3 className="text-2xl font-semibold text-white">
               Your assignments, your way
@@ -190,8 +198,10 @@ export default function HowItWorks() {
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            // animate={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
+            viewport={{ once: true }}
             className="space-y-4 p-16"
           >
             <h3 className="text-2xl font-semibold text-white">
@@ -200,8 +210,7 @@ export default function HowItWorks() {
             <p className="text-gray-400">
               Analyze code and instructions effortlessly and export
               comprehensive reports in no time. Perfect for educators and
-              developers looking to save time and ensure accuracy in every
-              review.
+              students looking to save time and ensure accuracy in every review.
             </p>
           </motion.div>
         </div>

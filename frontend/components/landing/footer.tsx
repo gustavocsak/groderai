@@ -94,7 +94,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/"
+                  href="#hero"
                   className="text-gray-400 hover:text-pink-500 transition-colors"
                 >
                   Home
@@ -130,7 +130,7 @@ const Footer = () => {
             <h4 className="text-xl font-semibold mb-4">Connect With Us</h4>
             <div className="flex space-x-4">
               <a
-                href="https://github.com"
+                href="https://github.com/gustavocsak"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-pink-500 transition-colors"
@@ -139,16 +139,7 @@ const Footer = () => {
                 <Github className="w-6 h-6" />
               </a>
               <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-pink-500 transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-6 h-6" />
-              </a>
-              <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/gustavo-de-sa/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-pink-500 transition-colors"

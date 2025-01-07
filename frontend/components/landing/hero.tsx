@@ -6,7 +6,10 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <div
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+    >
       <WaveMesh />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black pointer-events-none" />
 
