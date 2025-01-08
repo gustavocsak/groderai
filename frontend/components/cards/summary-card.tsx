@@ -9,7 +9,7 @@ import {
 import { Student } from "@/lib/types";
 import { CircleCheck, UserRound } from "lucide-react";
 import { FileText } from "lucide-react";
-import { studentToMarkdown, studentToText } from "@/lib/utils";
+import { summaryToMarkdown, studentToText } from "@/lib/utils";
 import { SummaryCopy } from "../summary-copy";
 
 interface SummaryProps {
@@ -23,7 +23,7 @@ export default function SummaryCard({ student }: SummaryProps) {
     (m) => m.is_documented,
   ).length;
   const summaryContent = studentToText(student);
-  const markdown = studentToMarkdown(student);
+  const markdown = summaryToMarkdown(student);
   return (
     <Card className="h-full overflow-auto">
       <CardHeader>

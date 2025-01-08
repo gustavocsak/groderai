@@ -4,6 +4,9 @@ import { Button } from "./ui/button";
 import { File } from "lucide-react";
 import { Student } from "@/lib/types";
 
+import { testdata } from "@/lib/types";
+import ExportFormTrigger from "./export-form-trigger";
+
 export default function FileView() {
   const [data] = useAtom(reportData);
   const [current, setCurrent] = useAtom(currentFile);
@@ -12,11 +15,11 @@ export default function FileView() {
     setCurrent(student);
   }
 
-  if (data) {
+  if (testdata) {
     return (
       <div className="flex flex-col justify-between h-full p-4">
         <div className="flex flex-col space-y-1">
-          {data.students.map((student) => (
+          {testdata.students.map((student) => (
             <Button
               variant={current == student ? "outline" : "ghost"}
               key={student.name}
@@ -29,9 +32,10 @@ export default function FileView() {
           ))}
         </div>
         <div>
-          <Button className="w-full" variant="default">
+          <ExportFormTrigger />
+          {/* <Button className="w-full" variant="default">
             Export to File
-          </Button>
+          </Button> */}
         </div>
       </div>
     );
