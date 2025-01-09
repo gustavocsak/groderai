@@ -7,9 +7,10 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import FileUpload from "./file-upload";
-import axios from "axios";
 import { useSetAtom } from "jotai";
 import { currentFile, reportData, reportLoading } from "@/store/state";
+import { useState, useEffect, useCallback } from "react";
+import { ApiResponse } from "@/lib/types";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
@@ -37,6 +38,8 @@ export default function AnalyzeForm() {
   const setLoading = useSetAtom(reportLoading);
   const setData = useSetAtom(reportData);
   const setCurrent = useSetAtom(currentFile);
+  const [taskStarted, setTaskStarted] = useState(false);
+  const [taskDone, setTaskDone] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,6 +58,7 @@ export default function AnalyzeForm() {
         headers: {
           Accept: "application/json",
         },
+        keepalive: true,
       });
 
       if (!response.ok) {
@@ -64,27 +68,48 @@ export default function AnalyzeForm() {
       }
 
       const responseData = await response.json();
-
       console.log(responseData);
-
-      if (
-        Array.isArray(responseData.students) &&
-        responseData.students.length > 0
-      ) {
-        setData(responseData);
-        setCurrent(responseData.students[0]); // Set the first student
-      } else {
-        // Handle cases where no students are returned
-        console.warn("No students found in the response.");
-        setData(responseData);
-        setCurrent(null);
-      }
+      setTaskStarted(true);
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
       setLoading(false);
     }
   }
+
+  const handleDataStatus = useCallback((data: ApiResponse) => {
+    setTaskStarted(false); // Set taskStarted to false after processing
+
+    if (Array.isArray(data.students) && data.students.length > 0) {
+      setData(data);
+      setCurrent(data.students[0]);
+    } else {
+      console.warn("No students found in the response.");
+      setData(null);
+      setCurrent(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!taskStarted) return; // Do not start polling if task is not started
+
+    const interval = setInterval(async () => {
+      try {
+        const response = await fetch("api/status");
+        const data = await response.json();
+        console.log("Response Text:", response);
+
+        if (data.task_done) {
+          console.log("Data received:", data.data);
+          handleDataStatus(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching status:", error);
+      }
+    }, 2000); // Poll every 2 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [taskStarted, handleDataStatus]);
 
   const instructionsRef = form.register("instructions");
   const codeRef = form.register("code");

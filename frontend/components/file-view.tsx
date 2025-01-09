@@ -15,11 +15,11 @@ export default function FileView() {
     setCurrent(student);
   }
 
-  if (testdata) {
+  if (data) {
     return (
       <div className="flex flex-col justify-between h-full p-4">
         <div className="flex flex-col space-y-1">
-          {testdata.students.map((student) => (
+          {data.students.map((student) => (
             <Button
               variant={current == student ? "outline" : "ghost"}
               key={student.name}
