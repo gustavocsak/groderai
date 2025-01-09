@@ -1,156 +1,149 @@
-from dotenv import load_dotenv
+from fastapi import FastAPI, File, UploadFile, HTTPException, BackgroundTasks, Request
+from fastapi.responses import JSONResponse
+from analyze import analyze_code
 import os
-from pydantic import BaseModel
-from typing import List, Literal
-import google.generativeai as genai
-import json
-import subprocess
+import zipfile
+import shutil
+import logging
 
 
-load_dotenv()
+logger = logging.getLogger('uvicorn.error')
+logger.setLevel(logging.DEBUG)
 
-class Metadata(BaseModel):
-  title: str
-  summary: str
-  requirements: list[str]
-  language: str
+app = FastAPI()
 
-class Method(BaseModel):
-  prototype: str
-  expected_prototype: str
-  time_complexity: Literal["O(1)", "O(n)", "O(n^2)", "O(log n)", "O(n log n)"]
-  is_documented: bool
-  errors: List[str]
-  is_correct: bool
+UPLOAD_FOLDER = "uploads"
+EXTRACT_FOLDER = "extracted"
 
-class CodeAnalysis(BaseModel):
-  readability: list[str]
-  documentation: list[str]
-  linting_errors: list[str]
-  missing_requirements: list[str]
-  restricted_usage: list[str]
 
-class Student(BaseModel):
-  name: str
-  filename: str
-  methods: list[Method]
-  code_analysis: CodeAnalysis
-  summary: list[str]
+tasks_done = False
+data = {}
 
-class Assignment(BaseModel):
-  metadata: Metadata
-  students: list[Student]
+def analyze_code_task(instructions_content, extract_path):
+  global tasks_done, data
+  java_files = []
+  file_code = {}
+  for root, _, files in os.walk(extract_path):
+    for file in files:
+      if file.endswith(".java"):
+        file_path = os.path.join(root, file)
+        with open(file_path, 'r', encoding='utf-8') as f:
+          content = f.read()
+          file_code[file] = content
+          java_files.append((file, content))
 
-gemini_key = os.getenv('GEMINI_KEY')
-genai.configure(api_key=gemini_key)
-model = genai.GenerativeModel(
-  model_name="gemini-1.5-flash",
-  system_instruction="Act as a coding assistant tool, identify fields in the assignment and report any errors in the code"
-)
+  batch_size = 3
+  final_result = []
+  for i in range(0, len(java_files), batch_size):
+    batch = java_files[i:i + batch_size]
 
-def lint_code(code):
-  file_path = "temp.java"
-  with open(file_path, 'w') as f:
-    f.write(code)
+    batch_code = ""
+    for filename, content in batch:
+      batch_code += f"<STUDENT>\n// File name: {filename}\n{content}\n</STUDENT>\n"
 
-  command = [
-    'java', '-jar', 'checkstyle-10.21.1-all.jar',
-    '-c', '/google_checks.xml', file_path
-  ]
-  result = subprocess.run(command, capture_output=True, text=True)
-  os.remove(file_path)
+    batch_result = analyze_code(instructions_content, batch_code, batch=2)
+    final_result.append(batch_result)
+    logger.debug("1 batch done")
 
-  if result.returncode == 0:
-    print("Linter passed with no issues.")
-    return result.stdout
+  combined_result = {
+    "metadata": final_result[0].get("metadata"),
+    "students": []
+  }
+
+  for result in final_result:
+    for index, student in enumerate(result.get("students", [])):
+      student_data = {
+        "name": student["name"],
+        "filename": student["filename"],
+        "code": file_code[student["filename"]],  # not a great fix but
+        "methods": student["methods"],
+        "code_analysis": student["code_analysis"],
+        "summary": student["summary"]
+      }
+      combined_result["students"].append(student_data)
+
+
+  logger.debug(f"Done, setting data to {combined_result}")
+  data = combined_result
+  tasks_done = True
+
+  cleanup_folders(UPLOAD_FOLDER, EXTRACT_FOLDER)
+
+
+@app.post("/api/analyze")
+async def analyze(background_tasks: BackgroundTasks, code: UploadFile = File(...), instructions: UploadFile = File(...)):
+    if not code or not instructions:
+      raise HTTPException(status_code=400, detail="No file part")
+
+    if not code.filename or not instructions.filename:
+      raise HTTPException(status_code=400, detail="No selected file")
+
+    zip_path = None
+    extract_path = None
+    try:
+      instructions_content = await instructions.read()
+      instructions_content = instructions_content.decode('utf-8')
+
+      if not code.filename.endswith(".zip"):
+        code_content = await code.read()
+        code_content = code_content.decode('utf-8')
+        parsed_data = analyze_code(instructions_content, code_content, 1)
+        return parsed_data
+
+      zip_path = os.path.join(UPLOAD_FOLDER, code.filename)
+      with open(zip_path, "wb") as f:
+        f.write(await code.read())
+
+      extract_path = os.path.join(EXTRACT_FOLDER, os.path.splitext(code.filename)[0])
+      os.makedirs(extract_path, exist_ok=True)
+
+      with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_path)
+
+    except Exception as e:
+      error_message = f"Error occurred during reading and unzipping of files. Details: {str(e)}"
+      raise HTTPException(status_code=500, detail=error_message)
+
+    background_tasks.add_task(analyze_code_task, instructions_content, extract_path)
+
+    return {"message": "Files will be analyzed in the background"}
+
+
+
+@app.route('/api/status', methods=['GET'])
+def check_task_status(request: Request):
+  global tasks_done
+  if tasks_done:
+    logger.debug("tasks_done == true")
+    tasks_done = False
+    return JSONResponse(content={"task_done": True, "data": data})
   else:
-    print("Linter found issues:")
-    return result.stderr
-
-  return result
-
-def analyze_code(instructions, code, batch):
-
-  linter_results = ""
-  if batch == 1:
-    linter_results = lint_code(code)
-
-  prompt = f"""
-    <ROLE>
-    You are part of GroderAI, a tool designed to augment the grading process for coding assignments by analyzing
-    Carefully examine the assignment instructions and provide answers for the metadata of the assignment.
-    Identify and highlight key details and important information.
-    Provide a concise summary of important points to pay attention when grading that file.
-    Present your findings in alignment with the provided response schema.
-    Ensure all fields in the response schema are filled, if something is not applicable use "N/A"
-    </ROLE>
-
-    <DATA>
-      <INSTRUCTIONS>
-      {instructions}
-      </INSTRUCTIONS>
-
-      <CODE>
-      {code}
-      </CODE>
-
-      <LINTING_RESULTS>
-      {linter_results}
-      </LINTING_RESULTS>
-    </DATA>
-  """
-
-  prompt_batch = f"""
-    <ROLE>
-    You are GroderAI, an AI tool designed to assist in grading coding assignments by analyzing assignment instructions, student code, and linting results. Your job is to provide a detailed report strictly following the response schema.
-
-    **Key Rules:**
-    1. Adhere strictly to the schema. Do not include any extra information or omit required fields.
-    2. Identify key information in the assignment instructions and populate the metadata field of the assignment.
-    3. Analyze each code provided and populate the fields needed, dp not be vague, be extremely specific.
-    4. For the summary, be very specific, concise and direct. Break down phrases in multiple strings.
-    4. If a field is not applicable, write "N/A.
-    5. Separate your analysis by students.
-    </ROLE>
-
-    <DATA>
-      <ASSIGNMENT_INSTRUCTIONS>
-      {instructions}
-      </ASSIGNMENT_INSTRUCTIONS>
-
-      <CODE>
-      {code}
-      </CODE>
-
-      <LINTING_RESULTS>
-      {linter_results}
-      </LINTING_RESULTS>
-    </DATA>
-  """
-
-  result = model.generate_content(
-    prompt if batch == 1 else prompt_batch,
-    generation_config=genai.GenerationConfig(
-        response_mime_type="application/json", response_schema=Assignment
-    ),
-  )
-
-  parsed_data = json.loads(result.text)
+    logger.debug("tasks_done == false")
+    return JSONResponse(content={"task_done": False})
 
 
 
-  # try:
-  #     # Attempt to load the JSON data
-  #   parsed_data = json.loads(result.text)
-  # except json.JSONDecodeError as e:
-  #   print(f"Error decoding JSON: {e}")
-  #   # Optionally write the raw response to a file for inspection
-  #   with open("raw_response.txt", "w") as raw_file:
-  #     raw_file.write(result.text)
-  #   return "error"
+def cleanup_folders(upload_folder, extract_folder):
+  try:
+    # Clean up UPLOAD_FOLDER
+    for filename in os.listdir(upload_folder):
+      file_path = os.path.join(upload_folder, filename)
+      if os.path.isfile(file_path):
+        os.remove(file_path)
+        print(f"Removed {file_path} from UPLOAD_FOLDER.")
+      elif os.path.isdir(file_path):
+        shutil.rmtree(file_path)  # Remove directories if any
+        print(f"Removed directory {file_path} from UPLOAD_FOLDER.")
 
-  # # Write parsed data to a JSON file
-  # with open("parsed_data.json", "w") as outfile:
-  #   json.dump(parsed_data, outfile, indent=4)
+    # Clean up EXTRACT_FOLDER
+    for filename in os.listdir(extract_folder):
+      file_path = os.path.join(extract_folder, filename)
+      if os.path.isfile(file_path):
+        os.remove(file_path)
+        print(f"Removed {file_path} from EXTRACT_FOLDER.")
+      elif os.path.isdir(file_path):
+        shutil.rmtree(file_path)  # Remove directories if any
+        print(f"Removed directory {file_path} from EXTRACT_FOLDER.")
 
-  return parsed_data
+  except Exception as e:
+    print(f"Error during cleanup: {str(e)}")
