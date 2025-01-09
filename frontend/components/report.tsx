@@ -1,27 +1,35 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { reportLoading, reportData, currentFile } from "@/store/state";
+import {
+  reportLoading,
+  reportData,
+  currentFile,
+  reportLoadingProgress,
+} from "@/store/state";
 import { GridLoader } from "react-spinners";
 import { ReportData } from "./report-data";
 
 import { testdata } from "@/lib/types";
+import { Progress } from "./ui/progress";
 
 export default function Report() {
   const [loading] = useAtom(reportLoading);
   const [data] = useAtom(reportData);
   const [current] = useAtom(currentFile);
+  const [progress] = useAtom(reportLoadingProgress);
 
   if (loading) {
     return (
-      <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
-        <GridLoader
-          color="#e11d48"
-          size={17}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
-      </div>
+      // <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
+      //   <GridLoader
+      //     color="#e11d48"
+      //     size={17}
+      //     aria-label="Loading Spinner"
+      //     data-testid="loader"
+      //   />
+      // </div>
+      <Progress value={progress} />
     );
   }
   if (data) {

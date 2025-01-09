@@ -5,7 +5,7 @@ import os
 import zipfile
 import shutil
 import logging
-
+import math
 
 logger = logging.getLogger('uvicorn.error')
 logger.setLevel(logging.DEBUG)
@@ -15,13 +15,14 @@ app = FastAPI()
 UPLOAD_FOLDER = "uploads"
 EXTRACT_FOLDER = "extracted"
 
-
+BATCH_SIZE = 3
 tasks_done = False
 data = {}
+java_files = []
+batches_done = 0
 
 def analyze_code_task(instructions_content, extract_path):
-  global tasks_done, data
-  java_files = []
+  global tasks_done, data, java_files, batches_done
   file_code = {}
   for root, _, files in os.walk(extract_path):
     for file in files:
@@ -32,10 +33,9 @@ def analyze_code_task(instructions_content, extract_path):
           file_code[file] = content
           java_files.append((file, content))
 
-  batch_size = 3
   final_result = []
-  for i in range(0, len(java_files), batch_size):
-    batch = java_files[i:i + batch_size]
+  for i in range(0, len(java_files), BATCH_SIZE):
+    batch = java_files[i:i + BATCH_SIZE]
 
     batch_code = ""
     for filename, content in batch:
@@ -43,7 +43,7 @@ def analyze_code_task(instructions_content, extract_path):
 
     batch_result = analyze_code(instructions_content, batch_code, batch=2)
     final_result.append(batch_result)
-    logger.debug("1 batch done")
+    batches_done += 1
 
   combined_result = {
     "metadata": final_result[0].get("metadata"),
@@ -63,7 +63,7 @@ def analyze_code_task(instructions_content, extract_path):
       combined_result["students"].append(student_data)
 
 
-  logger.debug(f"Done, setting data to {combined_result}")
+
   data = combined_result
   tasks_done = True
 
@@ -119,7 +119,10 @@ def check_task_status(request: Request):
     return JSONResponse(content={"task_done": True, "data": data})
   else:
     logger.debug("tasks_done == false")
-    return JSONResponse(content={"task_done": False})
+    total_batches = math.ceil(len(java_files) / BATCH_SIZE)
+    progress = math.floor((batches_done / total_batches) * 100)
+    logger.debug(f"total: {total_batches}, done {batches_done}, progress {progress}")
+    return JSONResponse(content={"task_done": False, "progress": progress})
 
 
 

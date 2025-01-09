@@ -7,12 +7,19 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import FileUpload from "./file-upload";
-import { useSetAtom } from "jotai";
-import { currentFile, reportData, reportLoading } from "@/store/state";
+import { useSetAtom, atom, useAtom } from "jotai";
+import {
+  currentFile,
+  reportData,
+  reportLoading,
+  reportLoadingProgress,
+} from "@/store/state";
 import { useState, useEffect, useCallback } from "react";
 import { ApiResponse } from "@/lib/types";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+interface DataStatusProps {}
 
 const formSchema = z.object({
   // thanks to https://medium.com/@damien_16960/input-file-x-shadcn-x-zod-88f0472c2b81
@@ -34,12 +41,14 @@ const formSchema = z.object({
     }),
 });
 
+const taskStartedAtom = atom(false);
+
 export default function AnalyzeForm() {
   const setLoading = useSetAtom(reportLoading);
   const setData = useSetAtom(reportData);
   const setCurrent = useSetAtom(currentFile);
-  const [taskStarted, setTaskStarted] = useState(false);
-  const [taskDone, setTaskDone] = useState(false);
+  const setProgress = useSetAtom(reportLoadingProgress);
+  const [taskStarted, setTaskStarted] = useAtom(taskStartedAtom);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,7 +71,7 @@ export default function AnalyzeForm() {
       });
 
       if (!response.ok) {
-        const errorText = await response.text(); // Get the raw response text if error occurs
+        const errorText = await response.text();
         console.error("Error response:", errorText);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -72,14 +81,18 @@ export default function AnalyzeForm() {
       setTaskStarted(true);
     } catch (error) {
       console.error("Error submitting form:", error);
-    } finally {
-      setLoading(false);
     }
   }
 
-  const handleDataStatus = useCallback((data: ApiResponse) => {
-    setTaskStarted(false); // Set taskStarted to false after processing
+  const handleDataStatus = useCallback((data) => {
+    if (!data.task_done) {
+      setProgress(data.progress);
+      return;
+    }
 
+    data = data.data;
+    setTaskStarted(false); // Set taskStarted to false after processing
+    setLoading(false);
     if (Array.isArray(data.students) && data.students.length > 0) {
       setData(data);
       setCurrent(data.students[0]);
@@ -99,10 +112,7 @@ export default function AnalyzeForm() {
         const data = await response.json();
         console.log("Response Text:", response);
 
-        if (data.task_done) {
-          console.log("Data received:", data.data);
-          handleDataStatus(data.data);
-        }
+        handleDataStatus(data);
       } catch (error) {
         console.error("Error fetching status:", error);
       }
