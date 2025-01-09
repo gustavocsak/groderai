@@ -21,15 +21,15 @@ export default function Report() {
 
   if (loading) {
     return (
-      // <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
-      //   <GridLoader
-      //     color="#e11d48"
-      //     size={17}
-      //     aria-label="Loading Spinner"
-      //     data-testid="loader"
-      //   />
-      // </div>
-      <Progress value={progress} />
+      <div className="w-9/12 p-8 flex items-center justify-center flex-col gap-4">
+        <GridLoader
+          color="#e11d48"
+          size={17}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+      // <Progress value={progress} />
     );
   }
   if (data) {

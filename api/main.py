@@ -112,10 +112,12 @@ async def analyze(background_tasks: BackgroundTasks, code: UploadFile = File(...
 
 @app.route('/api/status', methods=['GET'])
 def check_task_status(request: Request):
-  global tasks_done
+  global tasks_done, java_files, batches_done
   if tasks_done:
     logger.debug("tasks_done == true")
     tasks_done = False
+    java_files = []
+    batches_done = 0
     return JSONResponse(content={"task_done": True, "data": data})
   else:
     logger.debug("tasks_done == false")
