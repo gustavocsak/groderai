@@ -20,8 +20,6 @@ import { ApiResponse } from "@/lib/types";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-interface DataStatusProps {}
-
 const formSchema = z.object({
   // thanks to https://medium.com/@damien_16960/input-file-x-shadcn-x-zod-88f0472c2b81
   instructions: z
