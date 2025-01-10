@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Student } from "./types";
+import { Metadata, Student } from "./types";
 import { createHighlighter } from "shiki";
 
 export function cn(...inputs: ClassValue[]) {
@@ -146,14 +146,36 @@ interface ReportOptions {
   fileExtension: string;
   selectedFiles: string[];
   selectedReportTypes: string[];
+  assignmentMetadata: Metadata;
 }
 
 export function generateReport(files: Student[], options: ReportOptions) {
   let content = "";
-  const { selectedReportTypes, selectedFiles } = options;
+  const { selectedReportTypes, selectedFiles, assignmentMetadata } = options;
   const includeSummary = selectedReportTypes.includes("summary");
   const includeCode = selectedReportTypes.includes("code-analysis");
   const includeMethods = selectedReportTypes.includes("methods");
+  const includeAssignment = selectedReportTypes.includes("assignment");
+
+  if (includeAssignment) {
+    const { title, summary, language, requirements } = assignmentMetadata;
+    content += `## ${title} Summary\n\n`;
+    content += `### Description\n\n`;
+    content += `${summary}\n\n`;
+    content += `- Language: ${language}\n\n`;
+    content += `### Requirements\n\n`;
+
+    // Assuming requirements is an array of strings
+    if (Array.isArray(requirements) && requirements.length > 0) {
+      content += requirements
+        .map((req, index) => `${index + 1}. ${req}`)
+        .join("\n");
+    } else {
+      content += "No specific requirements provided.\n";
+    }
+
+    content += `\n\n`;
+  }
 
   for (let i = 0; i < files.length; i++) {
     if (selectedFiles.includes(files[i].filename)) {
@@ -180,7 +202,8 @@ export function generateReport(files: Student[], options: ReportOptions) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "sample.md"; // File name
+  const fileName = assignmentMetadata.title.replaceAll(" ", "-").toLowerCase();
+  a.download = `${fileName}-report.md`; // File name
   document.body.appendChild(a);
   a.click();
 

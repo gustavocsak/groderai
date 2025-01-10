@@ -6,6 +6,7 @@ import {
   reportData,
   currentFile,
   reportLoadingProgress,
+  loadingTextAtom,
 } from "@/store/state";
 import { GridLoader } from "react-spinners";
 import { ReportData } from "./report-data";
@@ -18,6 +19,7 @@ export default function Report() {
   const [data] = useAtom(reportData);
   const [current] = useAtom(currentFile);
   const [progress] = useAtom(reportLoadingProgress);
+  const [loadingText] = useAtom(loadingTextAtom);
 
   if (loading) {
     return (
@@ -28,8 +30,8 @@ export default function Report() {
           aria-label="Loading Spinner"
           data-testid="loader"
         />
+        <p className="text-lg text-muted-foreground mt-4">{loadingText}</p>
       </div>
-      // <Progress value={progress} />
     );
   }
   if (data) {

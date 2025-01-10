@@ -124,7 +124,7 @@ def check_task_status(request: Request):
     total_batches = math.ceil(len(java_files) / BATCH_SIZE)
     progress = math.floor((batches_done / total_batches) * 100)
     logger.debug(f"total: {total_batches}, done {batches_done}, progress {progress}")
-    return JSONResponse(content={"task_done": False, "progress": progress})
+    return JSONResponse(content={"task_done": False, "progress": progress, "batch": f"{batches_done} out of {total_batches}"})
 
 
 

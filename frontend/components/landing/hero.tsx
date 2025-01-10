@@ -50,9 +50,11 @@ export default function Hero() {
                 Live Demo
               </button>
             </Link>
-            <button className="px-8 py-3 bg-white/10 text-white rounded-full font-medium hover:bg-white/20 transition-colors">
-              Learn More
-            </button>
+            <Link href="#how-it-works">
+              <button className="px-8 py-3 bg-white/10 text-white rounded-full font-medium hover:bg-white/20 transition-colors">
+                Learn More
+              </button>
+            </Link>
           </motion.div>
         </div>
       </div>

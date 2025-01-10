@@ -7,7 +7,7 @@ export type CodeAnalysis = {
 };
 
 export type Metadata = {
-  description: string;
+  summary: string;
   language: string;
   requirements: string[];
   title: string;

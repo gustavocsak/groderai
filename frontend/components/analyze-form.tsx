@@ -13,6 +13,7 @@ import {
   reportData,
   reportLoading,
   reportLoadingProgress,
+  loadingTextAtom,
 } from "@/store/state";
 import { useState, useEffect, useCallback } from "react";
 import { ApiResponse } from "@/lib/types";
@@ -49,6 +50,7 @@ export default function AnalyzeForm() {
   const setCurrent = useSetAtom(currentFile);
   const setProgress = useSetAtom(reportLoadingProgress);
   const [taskStarted, setTaskStarted] = useAtom(taskStartedAtom);
+  const setLoadingText = useSetAtom(loadingTextAtom);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -57,6 +59,7 @@ export default function AnalyzeForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setLoading(true);
+      setLoadingText("Analyzing files... This may take a while.");
       const formData = new FormData();
       formData.append("instructions", values.instructions[0]);
       formData.append("code", values.code[0]);
@@ -87,6 +90,7 @@ export default function AnalyzeForm() {
   const handleDataStatus = useCallback((data) => {
     if (!data.task_done) {
       setProgress(data.progress);
+      setLoadingText(`${data.batch} batches analyzed...`);
       return;
     }
 

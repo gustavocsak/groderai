@@ -51,7 +51,7 @@ export default function HowItWorks() {
     const drawGlow = () => {
       // Main centered glow
       const centerX = canvas.width / 2;
-      const centerY = canvas.height / 4; // Positioned at the top quarter
+      const centerY = canvas.height / 4 + 25; // Positioned at the top quarter
 
       // Create multiple layered glows for stronger effect
       for (let i = 0; i < 3; i++) {
@@ -185,12 +185,12 @@ export default function HowItWorks() {
               Your assignments, your way
             </h3>
             <p className="text-gray-400">
-              Create custom rubrics, set your own grading criteria, and let
-              GroderAI handle the rest. Seamlessly integrate with your existing
-              learning management system.
+              Submit assignment instructions and code to receive a detailed
+              analysis report. GroderAI helps educators save time without
+              compromising quality.
             </p>
             <Link
-              href="/demo"
+              href="/analyze"
               className="inline-flex items-center text-pink-500 hover:text-pink-400 transition-colors"
             >
               Try GroderAI Demo <ArrowRight className="ml-2 h-4 w-4" />

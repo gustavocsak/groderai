@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FileText, Code, GitFork } from "lucide-react";
+import { FileText, Code, GitFork, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -18,23 +18,19 @@ import { reportData } from "@/store/state";
 import { useAtom } from "jotai";
 import { generateReport } from "@/lib/utils";
 
-/**
- * TODO: SEE HANDLEFILESELECTION
- * TODO: MUST SELECT AT LEAST ONE FILE FOR REPORT
- * TODO: MAYBE ADD OPTION TO KEEP ASSIGNMENT SUMMARY
- */
-
 const reportTypes = [
   { id: "summary", label: "Summary", icon: FileText },
   { id: "code-analysis", label: "Code Analysis", icon: Code },
   { id: "methods", label: "Methods", icon: GitFork },
+  { id: "assignment", label: "Assignment", icon: ClipboardList },
 ];
 
 import { testdata } from "@/lib/types";
 
 export default function ExportForm() {
-  const files = testdata.students;
-  // const [data] = useAtom(reportData);
+  const [data] = useAtom(reportData);
+  const assignmentMetadata = data.metadata;
+  const files = data.students;
   const [selectedReportTypes, setSelectedReportTypes] = useState<string[]>([
     "summary",
   ]);
@@ -49,7 +45,6 @@ export default function ExportForm() {
         ? prev.filter((t) => t !== type)
         : [...prev, type];
 
-      // Ensure at least one type is selected
       return newSelection.length === 0 ? [type] : newSelection;
     });
   };
@@ -58,11 +53,14 @@ export default function ExportForm() {
   // using file id
   // maybe implement an id instead of using filename for now
   const handleFileSelection = (fileId: string) => {
-    setSelectedFiles((prev) =>
-      prev.includes(fileId)
+    setSelectedFiles((prev) => {
+      const newSelection = prev.includes(fileId)
         ? prev.filter((id) => id !== fileId)
-        : [...prev, fileId],
-    );
+        : [...prev, fileId];
+
+      // Ensure at least one file is selected
+      return newSelection.length === 0 ? [fileId] : newSelection;
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -72,14 +70,13 @@ export default function ExportForm() {
       fileExtension,
       selectedFiles,
     });
-    console.log(
-      generateReport(files, {
-        fileExtension,
-        selectedFiles,
-        selectedReportTypes,
-      }),
-    );
-    // Here you would typically call an API or trigger the report generation
+
+    generateReport(files, {
+      fileExtension,
+      selectedFiles,
+      selectedReportTypes,
+      assignmentMetadata,
+    });
   };
 
   return (
@@ -88,7 +85,7 @@ export default function ExportForm() {
         <div className="space-y-6">
           <div className="space-y-2">
             <Label>Report Types</Label>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               {reportTypes.map((type) => {
                 const Icon = type.icon;
                 return (

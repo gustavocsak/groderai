@@ -23,9 +23,6 @@ export default function ExportFormTrigger() {
           </DialogDescription>
         </DialogHeader>
         <ExportForm />
-        {/* <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter> */}
       </DialogContent>
     </Dialog>
   );

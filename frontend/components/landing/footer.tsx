@@ -116,14 +116,6 @@ const Footer = () => {
                   Live Demo
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-400 hover:text-pink-500 transition-colors"
-                >
-                  Pricing
-                </Link>
-              </li>
             </ul>
           </div>
           <div>

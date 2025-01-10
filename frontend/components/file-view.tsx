@@ -19,7 +19,7 @@ export default function FileView() {
     return (
       <div className="flex flex-col justify-between h-full p-4">
         <div className="flex flex-col space-y-1">
-          {data.students.map((student) => (
+          {testdata.students.map((student) => (
             <Button
               variant={current == student ? "outline" : "ghost"}
               key={student.name}
