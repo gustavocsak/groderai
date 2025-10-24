@@ -35,11 +35,11 @@ class Student(BaseModel):
   filename: str
   methods: list[Method]
   code_analysis: CodeAnalysis
-  summary: list[str]
+
 
 class Assignment(BaseModel):
   metadata: Metadata
-  students: list[Student]
+  students: Student
 
 gemini_key = os.getenv('GEMINI_KEY')
 genai.configure(api_key=gemini_key)
